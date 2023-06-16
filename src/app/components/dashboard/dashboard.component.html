@@ -1,0 +1,61 @@
+<!-- 
+
+  <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" routerLink="/dashboard/home">Jobs section</a>
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" routerLink="/dashboard/jobs">Post Jobs</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="navbar-nav">
+      <div class="nav-item text-nowrap">
+        <a style="background: red; color: #fff; border-radius: 4px; margin: 10px;" class="nav-link px-3 cursor-pointer" (click)="logout()">Sign out</a>
+      </div>
+    </div>
+  </header>
+
+
+  <router-outlet></router-outlet>
+  
+   -->
+ 
+   <div class="container-fluid">
+    
+    <div class="row">
+
+      <div class="col-2" style="background-color: #2B3467;">
+        <nav class="navbar navbar-light">
+          <ul class="navbar-nav flex-column">
+            <div class="sidebar-image">
+              <img src="https://play-lh.googleusercontent.com/7y6gd1TKP4skySj-zI3KUs9uw9bpC99EOQNKa6BefSUHzzesFpIex3pDXWCCDTYywLM" class="image"/>
+            </div>
+            <li class="nav-item">
+              <a class="nav-link size" routerLink="/dashboard/home" style="color: white;">Jobs section</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link size" routerLink="/dashboard/jobs" style="color: white;">Post Jobs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link size" routerLink="/dashboard/home" style="color: white;">Jobs section</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link size" routerLink="/dashboard/jobs" style="color: white;">Post Jobs</a>
+            </li>
+          </ul>
+        </nav>
+        
+        <div class="mt-auto">
+          <a  class="nav-link px-3 cursor-pointer sign-button" (click)="logout()">Sign out</a>
+        </div>
+      </div>
+    
+      <div class="col-10 p-0">
+        <router-outlet></router-outlet>
+      
+      </div>
+    </div>
+  </div> 
+  
+   
+
+  
