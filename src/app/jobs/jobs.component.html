@@ -48,8 +48,12 @@
       <input type="text" placeholder="Enter JOBTITLE" name="jobTitle" ngModel required>
       <input type="text" placeholder="Enter Experience" name="experience" ngModel required>
       <input type="text" placeholder="Enter Skills" name="skills" ngModel required>
-      <input type="text" placeholder="Enter Location" name="location" ngModel required>
+      <input type="text" placeholder="Enter JOB TYPE" name="jobType" ngModel required>
     
+      <input type="text" placeholder="Enter Location" name="location" ngModel required>
+      <textarea placeholder="Enter JOB DESCRIPTION" name="jobDescription" ngModel required> </textarea>
+
+
       <button type="submit" [disabled]="!contactForm.valid" style="background-color: rgb(69, 156, 100);">Post Job</button>
     </form>
     <h1 *ngIf="istrue" style="color: green;">Job Posted Sucessfully</h1>

@@ -58,7 +58,11 @@
             <th>JOB TITLE</th>
             <th>EXPERIENCE</th>
             <th>SKILLS</th>
+            <th>JOB TYPE</th>
             <th>LOCATION</th>
+            <th>JOB DESCRIPTION</th>
+            <!-- <th>ACTIONS</th>
+            -->
           </tr>
         </thead>
         <tbody>
@@ -68,11 +72,18 @@
             <td>{{ item.jobTitle }}</td>
             <td>{{ item.experience }}</td>
             <td>{{ item.skills }}</td>
+            <td>{{ item.jobType }}</td>
             <td>{{ item.location }}</td>
+            <td>{{ item.jobDescription }}</td>
+            <!-- <td>
+              <button class="edit-button">Edit</button>
+              <button class="delete-button">Delete</button>
+            </td> -->
+
           </tr>
-          <!-- <tr *ngIf="jobsList.length === 0">
+          <tr *ngIf="jobsList.length === 0">
             <td colspan="6">No jobs found</td>
-          </tr> -->
+          </tr>
         </tbody>
       </table>
       <nav aria-label="Page navigation example">

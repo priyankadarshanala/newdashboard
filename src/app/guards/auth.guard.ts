@@ -2,6 +2,7 @@ import { AuthService } from './../services/auth.service';
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { AuthnService } from '../services/authn.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +20,9 @@ export class AuthGuard implements CanActivate {
       return false;
     }
   }
+
+
+
+
 
 }

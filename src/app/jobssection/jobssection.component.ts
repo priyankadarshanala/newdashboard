@@ -9,7 +9,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./jobssection.component.scss']
 })
 export class JobssectionComponent implements OnInit {
-  jobsList: any[] = []; 
+  jobsList: any[] = [];
   itemsPerPage: number = 20; 
   currentPage: number = 1; 
   totalPages: number = 0; 

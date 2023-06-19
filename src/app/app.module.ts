@@ -12,6 +12,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { JobsComponent } from './jobs/jobs.component';
 import { JobssectionComponent } from './jobssection/jobssection.component';
+import { AppLoginComponent } from './components/app-login/app-login.component';
+import { AppSignupComponent } from './components/app-signup/app-signup.component';
+import { ApptokenInterceptor } from './interceptors/apptoken.interceptor';
 
 
 
@@ -24,7 +27,9 @@ import { JobssectionComponent } from './jobssection/jobssection.component';
     SignupComponent,
     DashboardComponent,
     JobsComponent,
-    JobssectionComponent
+    JobssectionComponent,
+    AppLoginComponent,
+    AppSignupComponent
    
   ],
   imports: [
@@ -39,7 +44,12 @@ import { JobssectionComponent } from './jobssection/jobssection.component';
     provide:HTTP_INTERCEPTORS,
     useClass:TokenInterceptor,
     multi:true
-  }],
+  },
+{provide:HTTP_INTERCEPTORS,
+  useClass:ApptokenInterceptor,
+  multi: true
+}
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-export class TokenApiModel{
+export class TokenuserApiModel{
     accessToken!:string;
     refreshToken!:string;
   static accessToken: string;

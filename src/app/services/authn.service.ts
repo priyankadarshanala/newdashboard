@@ -1,31 +1,28 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
 import { Router } from '@angular/router';
-import {JwtHelperService} from '@auth0/angular-jwt'
-import { TokenApiModel } from '../models/token-api.model';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { TokenuserApiModel } from '../models/tokenuser-api.model';
+
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
-  getRefreshtoken(): any {
-    throw new Error('Method not implemented.');
-  }
+export class AuthnService {
 
-  private baseUrl: string = 'https://localhost:7058/api/User/';
-  // private Url: string = 'https://localhost:7058/api/applicant/';
+  // private baseUrl: string = 'https://localhost:7058/api/User/';
+  private Url: string = 'https://localhost:7058/api/applicant/';
   private userPayload:any;
-  
   constructor(private http: HttpClient, private router: Router) {
     this.userPayload = this.decodedToken();
    }
-//client signup
-  signUp(userObj: any) {
-    return this.http.post<any>(`${this.baseUrl}register`, userObj)
+  
+   signUp(userObj: any) {
+    return this.http.post<any>(`${this.Url}register`, userObj)
   }
   
 
   signIn(loginObj : any){
-    return this.http.post<any>(`${this.baseUrl}authenticate`,loginObj)
+    return this.http.post<any>(`${this.Url}authenticate`,loginObj)
   }
 
   signOut(){
@@ -72,11 +69,10 @@ export class AuthService {
     return this.userPayload.role;
   }
 
-  renewToken(tokenApi : TokenApiModel){
-    return this.http.post<any>(`${this.baseUrl}refresh`, tokenApi)
+  renewToken(tokenApi : TokenuserApiModel){
+    return this.http.post<any>(`${this.Url}refresh`, tokenApi)
   }
 //applicant login
-
 
 
 

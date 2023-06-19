@@ -1,7 +1,3 @@
-import { TokenApiModel } from './../models/token-api.model';
-import { Router } from '@angular/router';
-import { NgToastService } from 'ng-angular-popup';
-import { AuthService } from './../services/auth.service';
 import { Injectable } from '@angular/core';
 import {
   HttpRequest,
@@ -10,13 +6,17 @@ import {
   HttpInterceptor,
   HttpErrorResponse
 } from '@angular/common/http';
-import { catchError, Observable, switchMap, throwError } from 'rxjs';
-
+import { Observable, catchError, switchMap, throwError } from 'rxjs';
+import { AuthnService } from '../services/authn.service';
+import { NgToastService } from 'ng-angular-popup';
+import { Router } from '@angular/router';
+import { TokenuserApiModel } from '../models/tokenuser-api.model';
 
 @Injectable()
-export class TokenInterceptor implements HttpInterceptor {
+export class ApptokenInterceptor implements HttpInterceptor {
 
-  constructor(private auth: AuthService, private toast: NgToastService, private router: Router) {}
+ 
+  constructor(private auth: AuthnService, private toast: NgToastService, private router: Router) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const myToken = this.auth.getToken();
@@ -47,12 +47,12 @@ export class TokenInterceptor implements HttpInterceptor {
     );
   }
   handleUnAuthorizedError(req: HttpRequest<any>, next: HttpHandler){
-    let tokeApiModel = new TokenApiModel();
-    tokeApiModel.accessToken = this.auth.getToken()!;
-    tokeApiModel.refreshToken = this.auth.getRefreshToken()!;
-    return this.auth.renewToken(tokeApiModel)
+    let tokeuserApiModel = new TokenuserApiModel();
+    tokeuserApiModel.accessToken = this.auth.getToken()!;
+    tokeuserApiModel.refreshToken = this.auth.getRefreshToken()!;
+    return this.auth.renewToken(tokeuserApiModel)
     .pipe(
-      switchMap((data:TokenApiModel)=>{
+      switchMap((data:TokenuserApiModel)=>{
         this.auth.storeRefreshToken(data.refreshToken);
         this.auth.storeToken(data.accessToken);
         req = req.clone({
@@ -63,21 +63,9 @@ export class TokenInterceptor implements HttpInterceptor {
       catchError((err)=>{
         return throwError(()=>{
           this.toast.warning({detail:"Warning", summary:"Token is expired, Please Login again"});
-          this.router.navigate(['login'])
+          this.router.navigate(['app-login'])
         })
       })
-    )    
-  }
-  
-
-
-  ///applicant sign in
-
-  
-  }
-
-
-
-
-  
-
+    )   
+}
+}
