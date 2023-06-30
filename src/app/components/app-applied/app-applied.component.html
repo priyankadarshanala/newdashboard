@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+</head>
+<h2 class="heading">JOBS APPLIED</h2>
+<body>
+  <div class="body">
+    <div class="container">
+      
+      <table class="table  table-danger table-bordered">
+        <thead>
+          <tr>
+            <th>JOB ID</th>
+            <th>COMPANY</th>
+            <th>JOB TITLE</th>
+            <th>EXPERIENCE</th>
+            <th>SKILLS</th>
+            <th>JOB TYPE</th>
+            <th>LOCATION</th>
+            <th>JOB DESCRIPTION</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of displayedAppliedJobs">
+            <td>{{ item.jobId }}</td>
+            <td>{{ item.companyName }}</td>
+            <td>{{ item.jobTitle }}</td>
+            <td>{{ item.experience }}</td>
+            <td>{{ item.skills }}</td>
+            <td>{{ item.jobType }}</td>
+            <td>{{ item.location }}</td>
+            <td>{{ item.jobDescription }}</td>
+          </tr>
+          <tr *ngIf="appliedJobs.length === 0">
+            <td colspan="6">No jobs found</td>
+          </tr>
+        </tbody>
+      </table>
+   
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [ngClass]="{ 'disabled': currentPage === 1 }">
+            <a class="page-link" tabindex="-1" (click)="previousPage()">Previous</a>
+          </li>
+          <!-- <li class="page-item" *ngFor="let page of pages">
+            <a class="page-link" (click)="goToPage(page)">{{ page }}</a>
+          </li> -->
+          <li class="page-item" [ngClass]="{ 'disabled': currentPage === totalPages }">
+            <a class="page-link" (click)="nextPage()">Next</a>
+          </li>
+        </ul>
+      </nav>
+      <h5>Page: {{ currentPage }} of {{ totalPages }}</h5> 
+    </div>
+  </div>
+  
+</body>
+</html>

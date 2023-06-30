@@ -1,45 +1,12 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <style>
-    html, body {
-      height: 100vh;
-      
-    padding: 0%;
-      background-color: lightgray;
-    }
-    
-    .container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    input {
-      margin-bottom: 10px;
-      width: 300px;
-      padding: 10px;
-      font-size: 16px;
-    }
-    
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-    }
-  </style>
-</head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+</head>
 <body>
-    
+  
   <div class="container">
     
     <form #contactForm="ngForm" (ngSubmit)="postcontact(contactForm.value)">
@@ -59,73 +26,6 @@
     <h1 *ngIf="istrue" style="color: green;">Job Posted Sucessfully</h1>
   </div>
   
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <form #contactForm="ngForm" (ngSubmit)="postcontact(contactForm.value)">
-  <input type="text" placeholder="ENTER JOBID" name="jobId" ngModel>
-  <input type="text" placeholder="ENTER COMPANY NAME" name="companyName" ngModel>
-  <input type="text" placeholder="Enter JOBTITLE" name="jobTitle" ngModel>
-  <input type="text" placeholder="Enter Experience" name="experience" ngModel>
-  <input type="text" placeholder="Enter Skills" name="skills" ngModel>
-  <input type="text" placeholder="Enter Location" name="location" ngModel>
-
-  <button>Post Job</button>
-</form> -->
-
-
-
-
-
-
-
-
-<!-- 
-  
-  
-  
-  
-  <form #contactForm="ngForm" (ngSubmit)="postcontact(contactForm.value)">
-    <input type="text" placeholder="ENTER JOBID" name="jobid" ngModel>
-    <input type="text" placeholder="ENTER COMPANY NAME" name="company" ngModel>
-    <input type="text" placeholder="Enter JOBTITLE" name="jobtitle" ngModel>
-    <input type="text" placeholder="Experience" name="Experience" ngModel>
-    
-
-  
-   
-  
-    <button>Post Job</button>
-  </form>
-  
-  
-  
-  
-   -->
-  
-  
-
-  
- 
-  
-  
-  
-  
-
-
-  

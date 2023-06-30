@@ -3,21 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+ 
 </head>
+<h2 class="heading">JOBS POSTED FROM TOP COMPANIES</h2>
 <body>
-  <!-- edit-form.component.html -->
-
-
-
-
-
-<!-- code for edit  -->
-
+ 
   <div class="body">
     <div class="container">
-      <table class="table table-success table-striped">
+
+      <table class="table  table-danger table-bordered">
         <thead>
+          
           <tr>
             <th>JOB ID</th>
             <th>COMPANY</th>
@@ -41,25 +37,25 @@
             <td>{{ item.jobType }}</td>
             <td>{{ item.location }}</td>
             <td>{{ item.jobDescription }}</td>
-         
-            
+            <!-- <td>{{ item.applied }}</td> -->
             <td>
-              <button class="edit-button" (click)="showEditForm(item)">Edit</button>
-              <button class="delete-button" (click)="delete(item.jobId)">Delete</button>
+
+            
+              <button *ngIf="!item.applied" (click)="apply(item)">Apply</button>
+              <span *ngIf="item.applied" class="btn btn-success">Applied</span>
             </td>
-         
-        </tr>
+
+          </tr>
           <tr *ngIf="jobsList.length === 0">
             <td colspan="6">No jobs found</td>
           </tr>
-        
         </tbody>
       </table>
+    
       <nav aria-label="Page navigation example">
-         <ul class="pagination justify-content-center">
+        <ul class="pagination justify-content-center">
           <li class="page-item" [ngClass]="{ 'disabled': currentPage === 1 }">
             <a class="page-link"  tabindex="-1" (click)="previousPage()">Previous</a>
-
           </li>
           <!-- <li class="page-item" *ngFor="let page of pages">
             <a class="page-link" (click)="goToPage(page)">{{ page }}</a>
@@ -68,48 +64,12 @@
             <a class="page-link" (click)="nextPage()">Next</a>
           </li>
         </ul>
-      
-        <h5>Page: {{ currentPage }} of {{ totalPages }}</h5> 
-     
       </nav>
+      <h5>Page: {{ currentPage }} of {{ totalPages }}</h5> 
     </div>
   </div>
-  <div id="popup-form" class="popup-overlay" [ngClass]="{ 'show': showEditFormFlag }">
-    <div class="popup-content">
-    <form (ngSubmit)="onSubmit()">
-    <label>JOB ID</label>
-    <input type="text" [(ngModel)]="selectedJob.jobId" name="jobId" required>
   
-    <label>COMPANY</label>
-    <input type="text" [(ngModel)]="selectedJob.companyName" name="companyName" required>
-  
-    <label>JOB TITLE</label>
-    <input type="text" [(ngModel)]="selectedJob.jobTitle" name="jobTitle" required>
-  
-    <label>EXPERIENCE</label>
-    <input type="text" [(ngModel)]="selectedJob.experience" name="experience" required>
-  
-    <label>SKILLS</label>
-    <input type="text" [(ngModel)]="selectedJob.skills" name="skills" required>
-  
-    <label>JOB TYPE</label>
-    <input type="text" [(ngModel)]="selectedJob.jobType" name="jobType" required>
-  
-    <label>LOCATION</label>
-    <input type="text" [(ngModel)]="selectedJob.location" name="location" required>
-  
-    <label>JOB DESCRIPTION</label>
-    <textarea [(ngModel)]="selectedJob.jobDescription" name="jobDescription" required></textarea>
-    <div class="form-buttons">
-      <button type="submit">Save</button>
-      <button type="button" (click)="cancelEditForm()">Cancel</button>
-    </div>
-  </form>
-  </div>
-  </div>
 </body>
-
-
-
-
 </html>
+
+   

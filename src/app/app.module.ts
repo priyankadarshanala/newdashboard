@@ -15,6 +15,11 @@ import { JobssectionComponent } from './jobssection/jobssection.component';
 import { AppLoginComponent } from './components/app-login/app-login.component';
 import { AppSignupComponent } from './components/app-signup/app-signup.component';
 import { ApptokenInterceptor } from './interceptors/apptoken.interceptor';
+import { AppDashboardComponent } from './components/app-dashboard/app-dashboard.component';
+import { AppJobsComponent } from './components/app-jobs/app-jobs.component';
+import { AppAppliedComponent } from './components/app-applied/app-applied.component';
+
+
 
 
 
@@ -29,7 +34,11 @@ import { ApptokenInterceptor } from './interceptors/apptoken.interceptor';
     JobsComponent,
     JobssectionComponent,
     AppLoginComponent,
-    AppSignupComponent
+    AppSignupComponent,
+    AppDashboardComponent,
+    AppJobsComponent,
+    AppAppliedComponent,
+   
    
   ],
   imports: [
@@ -39,6 +48,7 @@ import { ApptokenInterceptor } from './interceptors/apptoken.interceptor';
     FormsModule,
     HttpClientModule,
     NgToastModule
+    
   ],
   providers: [{
     provide:HTTP_INTERCEPTORS,

@@ -10,11 +10,16 @@ import { Location } from '@angular/common';
 })
 export class JobssectionComponent implements OnInit {
   jobsList: any[] = [];
-  itemsPerPage: number = 20; 
+  itemsPerPage: number = 6; 
   currentPage: number = 1; 
   totalPages: number = 0; 
   pages: number[] = []; 
   displayedJobsList: any[] = [];
+  selectedJob: any = {};
+ 
+  showEditFormFlag = false;
+
+  
   constructor(private jobsint:JobsdetailsService , private location: Location) { 
     this.totalPages = Math.ceil(this.jobsList.length / this.itemsPerPage);
     this.generatePageNumbers();
@@ -45,7 +50,7 @@ export class JobssectionComponent implements OnInit {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
       this.updateDisplayedJobs();
-      // this.generatePageNumbers(); 
+      this.generatePageNumbers(); 
     }
   }
  
@@ -65,19 +70,53 @@ export class JobssectionComponent implements OnInit {
       this.updateDisplayedJobs();
     });
   }
-   
+  
+  // onSubmit(){
+  //   console.log(this.selectedJob)
+  // }
+  showEditForm(job: any) {
+    this.selectedJob = { ...job }; // Create a copy of the selected job to avoid modifying the original data directly
+    this.showEditFormFlag = true;
+  }
+ 
+  hideEditForm(): void {
+    this.showEditFormFlag = false;
+  }
 
-    goBack() {
-      this.location.back();
+  cancelEditForm(): void {
+    this.showEditFormFlag = false;
+
+  }
+
+
+// editdata(data:any){
+//   this.jobsint.edit(jobId,data).subscribe
+
+onSubmit() {
+  this.jobsint.editmethod(this.selectedJob.jobId, this.selectedJob).subscribe(
+    (response) => {
+      // Handle success response
+      alert("Job updated successfully");
+      console.log('Job updated successfully:', response);
+      this.hideEditForm(); // Hide the edit form after successful update
+      window.location.reload();
     }
-    
+  );
+}
+
+delete(jobId:number){
+  if (confirm('Are you sure you want to delete this job?')){
+  this.jobsint.deletemethod(jobId).subscribe(
+    (response) =>{
+      alert("Job Deleted Successfully")
+      console.log("deleted", response)
+      window.location.reload();
+    }
+  )
+}
+}
+
 }
 
 
-// ngOnInit(): void {
-  
-//   this.jobsint.getmethod().subscribe(data=>{
-//    this.jobsList=data
-//  })
-//  console.log(this.jobsList);
-//  }
+

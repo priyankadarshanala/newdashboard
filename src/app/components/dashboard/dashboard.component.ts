@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
   public users:any = [];
   public role!:string;
 
-  public FirstName : string = "";
+  public fullName : string = "";
   constructor(private api : ApiService, private auth: AuthService, private userStore: UserStoreService) { }
 
   ngOnInit() {
@@ -23,10 +23,10 @@ export class DashboardComponent implements OnInit {
     this.users = res;
     });
 
-    this.userStore['getFirstNameFromStore']()
+    this.userStore.getFullNameFromStore()
     .subscribe((val: any)=>{
-      const FirstNameFromToken = this.auth.getFirstNameFromToken();
-      this.FirstName = val || FirstNameFromToken
+      const FullNameFromToken = this.auth.getfullNameFromToken();
+      this.fullName = val || FullNameFromToken
     });
 
     this.userStore.getRoleFromStore()

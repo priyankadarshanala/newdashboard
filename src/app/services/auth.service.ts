@@ -7,6 +7,9 @@ import { TokenApiModel } from '../models/token-api.model';
   providedIn: 'root'
 })
 export class AuthService {
+  getfullNameFromToken() {
+    throw new Error('Method not implemented.');
+  }
   getRefreshtoken(): any {
     throw new Error('Method not implemented.');
   }

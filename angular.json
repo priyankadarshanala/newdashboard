@@ -70,6 +70,7 @@
           "configurations": {
             "production": {
               "browserTarget": "AngularAuthYtUI:build:production"
+              
             },
             "development": {
               "browserTarget": "AngularAuthYtUI:build:development"
