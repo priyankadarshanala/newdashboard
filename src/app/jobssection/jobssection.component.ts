@@ -10,7 +10,7 @@ import { Location } from '@angular/common';
 })
 export class JobssectionComponent implements OnInit {
   jobsList: any[] = [];
-  itemsPerPage: number = 6; 
+  itemsPerPage: number = 12; 
   currentPage: number = 1; 
   totalPages: number = 0; 
   pages: number[] = []; 
@@ -35,6 +35,7 @@ export class JobssectionComponent implements OnInit {
       this.currentPage--;
       this.updateDisplayedJobs();
       this.generatePageNumbers(); 
+      window.scrollTo(0, 0);
     }
   }
 
@@ -43,6 +44,7 @@ export class JobssectionComponent implements OnInit {
       this.currentPage++;
       this.updateDisplayedJobs();
       this.generatePageNumbers(); 
+      window.scrollTo(0, 0);
     }
   }
 

@@ -18,6 +18,10 @@ import { ApptokenInterceptor } from './interceptors/apptoken.interceptor';
 import { AppDashboardComponent } from './components/app-dashboard/app-dashboard.component';
 import { AppJobsComponent } from './components/app-jobs/app-jobs.component';
 import { AppAppliedComponent } from './components/app-applied/app-applied.component';
+import { AppHomeComponent } from './components/app-home/app-home.component';
+import { ClientHomeComponent } from './components/client-home/client-home.component';
+
+
 
 
 
@@ -38,6 +42,10 @@ import { AppAppliedComponent } from './components/app-applied/app-applied.compon
     AppDashboardComponent,
     AppJobsComponent,
     AppAppliedComponent,
+    AppHomeComponent,
+    ClientHomeComponent,
+   
+    
    
    
   ],

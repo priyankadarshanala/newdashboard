@@ -7,12 +7,7 @@ import { TokenApiModel } from '../models/token-api.model';
   providedIn: 'root'
 })
 export class AuthService {
-  getfullNameFromToken() {
-    throw new Error('Method not implemented.');
-  }
-  getRefreshtoken(): any {
-    throw new Error('Method not implemented.');
-  }
+
 
   private baseUrl: string = 'https://localhost:7058/api/User/';
   // private Url: string = 'https://localhost:7058/api/applicant/';
@@ -65,7 +60,7 @@ export class AuthService {
     return jwtHelper.decodeToken(token)
   }
 
-  getFirstNameFromToken(){
+  getfullNameFromToken(){
     if(this.userPayload)
     return this.userPayload.name;
   }

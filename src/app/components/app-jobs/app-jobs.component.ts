@@ -10,13 +10,16 @@ import { JobsdetailsService } from 'src/app/jobsdetails.service';
 })
 export class AppJobsComponent implements OnInit {
   jobsList: any[] = [];
-  itemsPerPage: number = 10; 
+  itemsPerPage: number = 12; 
   currentPage: number = 1; 
   totalPages: number = 0; 
   pages: number[] = []; 
   
+  
   displayedJobsList: any[] = [];
   
+
+  showUploadPopupFlag: boolean = false;
   constructor(private jobsint:JobsdetailsService, private appliedJobsService: AppliedJobsService, private http: HttpClient) { 
     this.totalPages = Math.ceil(this.jobsList.length / this.itemsPerPage);
     this.generatePageNumbers();
@@ -29,12 +32,16 @@ export class AppJobsComponent implements OnInit {
   
 
   }
+  toggleDetails(item: any) {
+    item.showDetails = !item.showDetails;
+  }
 
   previousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
       this.updateDisplayedJobs();
       this.generatePageNumbers(); 
+      window.scrollTo(0, 0);
     }
   }
 
@@ -43,6 +50,7 @@ export class AppJobsComponent implements OnInit {
       this.currentPage++;
       this.updateDisplayedJobs();
       this.generatePageNumbers(); 
+      window.scrollTo(0, 0);
     }
   }
 
@@ -91,5 +99,25 @@ export class AppJobsComponent implements OnInit {
     );
 
        }
+      
+
+
+
+
+       showUploadPopup() {
+        this.showUploadPopupFlag = true;
+      }
+    
+      cancelUploadPopup() {
+        this.showUploadPopupFlag = false;
+      }
+    
+      // saveUploadedResume(file: File) {
+      //   // Handle the uploaded file here
+      //   console.log(file);
+      //   this.showUploadPopupFlag = false;
+      // }
+
+
   
     }

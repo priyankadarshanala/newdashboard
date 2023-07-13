@@ -24,7 +24,7 @@ export class AppComponent {
 
     this.userStore['getFirstNameFromStore']()
     .subscribe((val: any)=>{
-      const FirstNameFromToken = this.auth.getFirstNameFromToken();
+      const FirstNameFromToken = this.auth.getfullNameFromToken();
       this.FirstName = val || FirstNameFromToken
     });
 

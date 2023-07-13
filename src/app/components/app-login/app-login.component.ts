@@ -50,7 +50,7 @@ export class AppLoginComponent implements OnInit {
           const tokenPayload = this.auth.decodedToken();
           this.appstore.setFullNameForStore(tokenPayload.name);
           this.appstore.setRoleForStore(tokenPayload.role);
-          this.toast.success({detail:"SUCCESS", summary:res.message, duration: 5000});
+          this.toast.success({detail:"SUCCESS", summary:res.message, duration: 3000});
           this.router.navigate(['app-dashboard'])
         },
         error: (err) => {

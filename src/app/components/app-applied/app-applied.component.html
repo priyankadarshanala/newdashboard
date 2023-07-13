@@ -1,4 +1,110 @@
 
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+        .jobs-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .job-box {
+    width: 280px; /* Set the desired width for each job box */
+    height: 400px; /* Set the desired height for each job box */
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+  }
+    .job-box h3 {
+      margin-top: 0;
+    }
+
+    .job-box p {
+      margin-bottom: 5px;
+    }
+
+    .view-more {
+      color: blue;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+ 
+
+  <div class="body">
+    <div class="container">
+<div class="jobs-row">
+      <div class="job-box" *ngFor="let item of displayedAppliedJobs">
+        <h3>{{ item.jobTitle }}</h3>
+        <p><span style="color: rgb(8, 8, 8); font-weight: 600;">Company: </span> {{ item.companyName }}</p>
+        <p><span style="color: rgb(8, 8, 8); font-weight: 600;">Experience: </span> {{ item.experience }}</p>
+        <p><span style="color: rgb(8, 8, 8); font-weight: 600;">Skills: </span>{{ item.skills }}</p>
+        <p><span style="color: rgb(8, 8, 8); font-weight: 600;">Job Type: </span>{{ item.jobType }}</p>
+        <p><span style="color: rgb(8, 8, 8); font-weight: 600;">Location: </span>{{ item.location }}</p>
+        <p><span style="color: rgb(8, 8, 8); font-weight: 600;">Job Description: </span> {{ item.jobDescription }}</p>
+       
+      </div>
+    </div>
+    
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [ngClass]="{ 'disabled': currentPage === 1 }">
+          <a class="page-link" tabindex="-1" (click)="previousPage()">Previous</a>
+        </li>
+       
+        <li class="page-item" [ngClass]="{ 'disabled': currentPage === totalPages }">
+          <a class="page-link" (click)="nextPage()">Next</a>
+        </li>
+      </ul>
+    </nav>
+    <h5>Page: {{ currentPage }} of {{ totalPages }}</h5> 
+  </div>
+</div>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,9 +153,7 @@
           <li class="page-item" [ngClass]="{ 'disabled': currentPage === 1 }">
             <a class="page-link" tabindex="-1" (click)="previousPage()">Previous</a>
           </li>
-          <!-- <li class="page-item" *ngFor="let page of pages">
-            <a class="page-link" (click)="goToPage(page)">{{ page }}</a>
-          </li> -->
+         
           <li class="page-item" [ngClass]="{ 'disabled': currentPage === totalPages }">
             <a class="page-link" (click)="nextPage()">Next</a>
           </li>
@@ -60,4 +164,4 @@
   </div>
   
 </body>
-</html>
+</html> -->

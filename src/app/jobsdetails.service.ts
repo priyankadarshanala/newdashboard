@@ -13,14 +13,24 @@ export class JobsdetailsService {
 
 baseUrl = 'https://localhost:7058/api/Jobs/Addjobsdata';
 Url = 'https://localhost:7058/api/Jobs/Jobs';
-
+applicantUrl = "https://localhost:7058/api/applicant";
 applyjobsurl = "https://localhost:7058/api/Applied/ApplyForJob";
 getappliedurl = "https://localhost:7058/api/Applied/AppliedJobs";
 
-// editurl = "https://localhost:7058/api/Jobs/editjobsdata"
-// deleteurl = "https://localhost:7058/api/Jobs/deletejobsdata"
+
+//profile urls
+
+profilepostUrl="https://localhost:7058/api/Profile";
+
+resumeuploadUrl="https://localhost:7058/api/ResumeClass";
+resumeget="https://localhost:7058/api/ResumeClass/8";
+
 getmethod(): Observable<any>{
   return this.http.get<any>(this.Url)
+}
+
+getapplicant(): Observable<any>{
+  return this.http.get<any>(this.applicantUrl)
 }
 
 postmethod(data:any): Observable<any>{
@@ -40,5 +50,15 @@ deletemethod(jobId: number){
   const deleteurl = `https://localhost:7058/api/Jobs/deletejobsdata/${jobId}`;
   return this.http.delete(deleteurl)
 }
+
+uploadResume(file: File): Observable<any> {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  return this.http.post(this.resumeuploadUrl, formData);
+}
+
+
+
 
 }

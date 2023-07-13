@@ -59,7 +59,7 @@ export class AuthnService {
     return jwtHelper.decodeToken(token)
   }
 
-  getFirstNameFromToken(){
+  getfullNameFromToken(){
     if(this.userPayload)
     return this.userPayload.name;
   }

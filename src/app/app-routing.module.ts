@@ -12,6 +12,8 @@ import { AuthnGuard } from './guard/authn.guard';
 import { AppJobsComponent } from './components/app-jobs/app-jobs.component';
 import { AppAppliedComponent } from './components/app-applied/app-applied.component';
 import { AppDashboardComponent } from './components/app-dashboard/app-dashboard.component';
+import { AppHomeComponent } from './components/app-home/app-home.component';
+import { ClientHomeComponent } from './components/client-home/client-home.component';
 
 
 
@@ -23,17 +25,20 @@ const routes: Routes = [
   {path:'', redirectTo:'login', pathMatch:'full'},
   {path:'login', component:LoginComponent},
   {path:'app-login', component:AppLoginComponent},
+  
   {path: 'app-dashboard', component: AppDashboardComponent, canActivate:[ AuthnGuard], children:[
     
     {path: 'jobspage', component:AppJobsComponent},
-    { path: 'app-applied', component: AppAppliedComponent }
+    { path: 'app-applied', component: AppAppliedComponent },
+    {path:'app-home', component:AppHomeComponent},
   ]},
   {path:'signup', component:SignupComponent},
   {path:'app-signup', component:AppSignupComponent},
   {path:'dashboard', component:DashboardComponent, canActivate:[AuthGuard], children:[
     
     {path: 'home', component:JobssectionComponent},
-    { path: 'jobs', component: JobsComponent }
+    { path: 'jobs', component: JobsComponent },
+    { path: 'client-home', component: ClientHomeComponent }
   ]
 }
   

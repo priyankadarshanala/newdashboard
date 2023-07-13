@@ -9,7 +9,7 @@ import { JobsdetailsService } from 'src/app/jobsdetails.service';
 })
 export class AppAppliedComponent implements OnInit {
   appliedJobs: any[]=[];
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 20;
   currentPage: number = 1;
   totalPages: number = 0;
   pages: number[] = [];
