@@ -18,33 +18,54 @@ applyjobsurl = "https://localhost:7058/api/Applied/ApplyForJob";
 getappliedurl = "https://localhost:7058/api/Applied/AppliedJobs";
 
 
-//profile urls
 
-profilepostUrl="https://localhost:7058/api/Profile";
 
 resumeuploadUrl="https://localhost:7058/api/ResumeClass";
 resumeget="https://localhost:7058/api/ResumeClass/8";
 
+
+//client jobs get method
 getmethod(): Observable<any>{
   return this.http.get<any>(this.Url)
 }
 
-getapplicant(): Observable<any>{
-  return this.http.get<any>(this.applicantUrl)
-}
-
+//client jobs post method
 postmethod(data:any): Observable<any>{
 
   return this.http.post(this.baseUrl,data)
 }
 
-getapplied(){
-  return this.http.get(this.getappliedurl)
-}
+//client jobs edit method
 editmethod(jobId: number, data: any): Observable<any> {
   const editurl = `https://localhost:7058/api/Jobs/editjobsdata/${jobId}`;
   return this.http.put(editurl, data);
 }
+
+
+getapplicant(): Observable<any>{
+  return this.http.get<any>(this.applicantUrl)
+}
+
+
+
+getapplied(){
+  return this.http.get(this.getappliedurl)
+}
+
+
+getResume(id: number): Observable<any> {
+  const url = `https://localhost:7058/api/ResumeClass/${id}`;
+  return this.http.get(url);
+}
+
+downloadResume(resumeId: number):  Observable<Blob>{
+  const resumeGetUrl = `${this.resumeuploadUrl}/${resumeId}`;
+
+    return this.http.get(resumeGetUrl, { responseType: 'blob' });
+}
+
+
+
 
 deletemethod(jobId: number){
   const deleteurl = `https://localhost:7058/api/Jobs/deletejobsdata/${jobId}`;

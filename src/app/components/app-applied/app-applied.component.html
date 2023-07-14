@@ -7,33 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-        .jobs-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-    .job-box {
-    width: 280px; /* Set the desired width for each job box */
-    height: 400px; /* Set the desired height for each job box */
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin: 10px;
-  }
-    .job-box h3 {
-      margin-top: 0;
-    }
-
-    .job-box p {
-      margin-bottom: 5px;
-    }
-
-    .view-more {
-      color: blue;
-      cursor: pointer;
-      text-decoration: underline;
-    }
-  </style>
+  
 </head>
 
 <body>
@@ -57,15 +31,15 @@
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
         <li class="page-item" [ngClass]="{ 'disabled': currentPage === 1 }">
-          <a class="page-link" tabindex="-1" (click)="previousPage()">Previous</a>
+          <button class="page-link buttons" tabindex="-1" (click)="previousPage()">Previous</button>
         </li>
        
         <li class="page-item" [ngClass]="{ 'disabled': currentPage === totalPages }">
-          <a class="page-link" (click)="nextPage()">Next</a>
+          <button class="page-link buttons" (click)="nextPage()">Next</button>
         </li>
       </ul>
     </nav>
-    <h5>Page: {{ currentPage }} of {{ totalPages }}</h5> 
+    <h5 style="text-align: center;">Page: {{ currentPage }} of {{ totalPages }}</h5> 
   </div>
 </div>
 

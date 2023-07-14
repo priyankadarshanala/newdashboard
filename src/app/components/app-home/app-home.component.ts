@@ -41,61 +41,65 @@ export class AppHomeComponent implements OnInit {
     { 
       profilePhoto: 'assets/Profile pht.jpg',
       name: 'Naresh',
-      content: 'I sincerely thank this portal for helping me find a job at Toshiba (TSIP),one of the largest' 
+      content: "I cannot express enough gratitude for the jobs portal. It revolutionized my job search experience. "
     },
     { 
       profilePhoto: 'assets/Anjali.png',
       name: 'Anjali',
-      content: 'Another testimonial for the job portal.' 
+      content: "The jobs portal exceeded my expectations in every way possible. Its very great platform. " 
     },
     { 
       profilePhoto: 'assets/rizwana.png',
       name: 'Rizwana',
-      content: 'One more testimonial for the job portal.' 
+      content: "I'm very glad to get placed from Onlinejobsportal to Dell EMC corporation. I got placed just at my very less time.." 
     },
     { 
       profilePhoto: 'assets/chandra.png',
       name: 'Chandra',
-      content: 'Testimonial content for job portal.' 
+      content: 'Iam very thankful to jobs portal.It Is a very good and geniune platform for freshers to find jobs...' 
     },
     { 
       profilePhoto: 'assets/prakyath.png',
       name: 'Prakhyath',
-      content: 'Another testimonial for the job portal.' 
+      content: "I had a great experience using the jobs portal to find my next career move..."  
     },
     { 
       profilePhoto: 'assets/soumya.png',
       name: 'Soumya',
-      content: 'One more testimonial for the job portal.' 
+      content: 'I am very grateful to them for effectively and sincerely helping me to grab first ever job opportunity' 
     },
     { 
       profilePhoto: 'assets/Madhu.png',
       name: 'Madhu',
-      content: 'Testimonial content for job portal.' 
+      content: 'Thank you onlinejobsportal for providing multiple opportunties in number of companies where I got place placed' 
     },
     { 
       profilePhoto: 'assets/srimathi.png',
       name: 'srimathi',
-      content: 'Another testimonial for the job portal.' 
+      content: 'I am extremely grateful to the jobs portal for helping me secure my dream job...' 
     },
     { 
       profilePhoto: 'assets/mounika.png',
       name: 'Mounika',
-      content: 'One more testimonial for the job portal.' 
+      content: "I have been searching for a job for months without any luck until I discovered the jobs portal."
     },
     { 
       profilePhoto: 'assets/priyanka.png',
       name: 'Priyanka',
-      content: 'Another testimonial for the job portal.' 
+      content: "I can't thank the jobs portal enough for the fantastic opportunities" 
     },
    
     { 
       profilePhoto: 'assets/sandhya.pic.png',
       name: 'sandhya',
-      content: 'Another testimonial for the job portal.' 
+      content: "I had been struggling to find a job that matched my qualifications until I stumbled upon the jobs portal.."
     }
   ];
   //Testimonials end....
+
+
+
+  //pagination and geting jobs
   currentSlideIndex = 0;
   jobsList: any[] = [];
   itemsPerPage: number = 4; 
@@ -111,7 +115,7 @@ export class AppHomeComponent implements OnInit {
   }
 
 
-  profilePostUrl = 'https://localhost:7058/api/Profile';
+
 
 
 
@@ -189,7 +193,7 @@ export class AppHomeComponent implements OnInit {
 
   
 
-  
+  //carousel code
   startCarousel() {
     let currentIndex = 0;
     setInterval(() => {
@@ -268,23 +272,9 @@ closeChatbot() {
 }
 
 
-//profile
 
-submitProfile(): void {
-  const formData = new FormData();
-  formData.append('profileId', this.profileId.toString());
-  formData.append('firstName', this.firstName);
-  formData.append('lastName', this.lastName);
-  formData.append('email', this.email);
-  formData.append('mobile', this.mobile);
-  formData.append('resume', this.resume);
 
-  this.http.post(this.profilePostUrl, formData).subscribe(
-    (data) => {
-      console.log(data)
-    }
-  );
-}
+
 
 onFileChange(event: any): void {
   const fileList: FileList = event.target.files;

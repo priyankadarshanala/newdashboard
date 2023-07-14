@@ -18,7 +18,7 @@ export class AppJobsComponent implements OnInit {
   
   displayedJobsList: any[] = [];
   
-
+id:any;
   showUploadPopupFlag: boolean = false;
   constructor(private jobsint:JobsdetailsService, private appliedJobsService: AppliedJobsService, private http: HttpClient) { 
     this.totalPages = Math.ceil(this.jobsList.length / this.itemsPerPage);
@@ -118,6 +118,65 @@ export class AppJobsComponent implements OnInit {
       //   this.showUploadPopupFlag = false;
       // }
 
+      // saveResume(fileInput: any) {
+      //   const file: File = fileInput.files[0];
+      //   this.jobsint.uploadResume(file).subscribe(
+      //     response => {
+           
+      //       console.log('Resume uploaded successfully:', response);
+      //       alert("Resemue uploaded sucessfully")
+         
+      //     },
+        
+      //   );
+      // }
 
-  
-    }
+      saveResume(fileInput: any) {
+        const file: File = fileInput.files[0];
+        const formData = new FormData();
+        formData.append('file', file);
+      
+        this.http.post('https://localhost:7058/api/ResumeClass', formData).subscribe(
+          (response: any) => {
+            const resumeId = response.resumeId;
+            if (resumeId) {
+              console.log('Resume uploaded successfully. Resume ID:', resumeId);
+              alert("Resume uploaded successfully. Resume ID: " + resumeId);
+              this.downloadResume(resumeId);
+            } else {
+              console.error('Resume ID not found in the response.');
+              alert("Resume ID not found in the response. Please try again.");
+            }
+          },
+          (error: any) => {
+            console.error('Error uploading resume:', error);
+            alert("Error uploading resume. Please try again.");
+          }
+        );
+      }
+      
+      downloadResume(resumeId: number) {
+        if (resumeId) {
+          const url = `https://localhost:7058/api/ResumeClass/${resumeId}`;
+      
+          this.http.get(url, { responseType: 'blob' }).subscribe(
+            (response: Blob) => {
+              const downloadUrl = window.URL.createObjectURL(response);
+              const link = document.createElement('a');
+              link.href = downloadUrl;
+              link.download = `resume_${resumeId}.pdf`; // Replace with the appropriate file name and extension
+              link.click();
+              window.URL.revokeObjectURL(downloadUrl);
+            },
+            (error: any) => {
+              console.error('Error downloading resume:', error);
+              alert('Error downloading resume. Please try again.');
+            }
+          );
+        } else {
+          console.error('Invalid resumeId');
+          alert('Invalid resumeId. Please try again.');
+        }
+      
+  }
+}
