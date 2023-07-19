@@ -1,0 +1,32 @@
+/* resume-list.component.css */
+
+.job-details {
+    margin-bottom: 20px;
+  }
+  
+  .toggle-icon {
+    font-weight: bold;
+    cursor: pointer;
+    padding-left: 5px;
+  }
+  
+  .applicants-resumes {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+  
+  .applicants-resumes.active {
+    max-height: 500px; /* Set an appropriate value for the maximum height */
+  }
+  
+
+  /* resume-list.component.css */
+
+  .applicants-resumes {
+    display: none;
+  }
+  
+  .applicants-resumes.active {
+    display: block;
+  }

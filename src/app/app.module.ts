@@ -20,6 +20,7 @@ import { AppJobsComponent } from './components/app-jobs/app-jobs.component';
 import { AppAppliedComponent } from './components/app-applied/app-applied.component';
 import { AppHomeComponent } from './components/app-home/app-home.component';
 import { ClientHomeComponent } from './components/client-home/client-home.component';
+import { CandidatessectionComponent } from './components/candidatessection/candidatessection.component';
 
 
 
@@ -44,6 +45,7 @@ import { ClientHomeComponent } from './components/client-home/client-home.compon
     AppAppliedComponent,
     AppHomeComponent,
     ClientHomeComponent,
+    CandidatessectionComponent,
    
     
    

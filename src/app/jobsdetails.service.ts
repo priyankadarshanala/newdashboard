@@ -2,6 +2,26 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+interface ResumeViewModel {
+  applicantName: string;
+  applicantEmail: string;
+  resumeFileName: string;
+  resumeFileData: string; // This will be a base64 encoded string
+}
+
+ interface JobResumeViewModel {
+  jobId: number;
+  companyName: string;
+  jobTitle: string;
+  experience: string;
+  skills: string;
+  jobType: string;
+  postedDate: string;
+  location: string;
+  jobDescription: string;
+  resumes: ResumeViewModel[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,8 +42,7 @@ getappliedurl = "https://localhost:7058/api/Applied/AppliedJobs";
 
 resumeuploadUrl="https://localhost:7058/api/ResumeClass";
 resumeget="https://localhost:7058/api/ResumeClass/8";
-
-
+private apiUrl = 'https://localhost:7058/api/Resumes';
 //client jobs get method
 getmethod(): Observable<any>{
   return this.http.get<any>(this.Url)
@@ -78,6 +97,15 @@ uploadResume(file: File): Observable<any> {
 
   return this.http.post(this.resumeuploadUrl, formData);
 }
+
+
+
+
+getResumes(): Observable<JobResumeViewModel[]> {
+  return this.http.get<JobResumeViewModel[]>(this.apiUrl);
+}
+
+
 
 
 

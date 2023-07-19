@@ -52,7 +52,10 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['dashboard'])
         },
         error: (err) => {
-          this.toast.error({detail:"ERROR", summary:"Something went wrong!", duration: 5000});
+          
+            const errorMessage = err.error.message;
+            
+          this.toast.error({detail:"ERROR", summary: errorMessage, duration: 3000});
           console.log(err);
         },
       });

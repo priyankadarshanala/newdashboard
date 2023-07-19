@@ -14,6 +14,7 @@ import { AppAppliedComponent } from './components/app-applied/app-applied.compon
 import { AppDashboardComponent } from './components/app-dashboard/app-dashboard.component';
 import { AppHomeComponent } from './components/app-home/app-home.component';
 import { ClientHomeComponent } from './components/client-home/client-home.component';
+import { CandidatessectionComponent } from './components/candidatessection/candidatessection.component';
 
 
 
@@ -30,7 +31,9 @@ const routes: Routes = [
     
     {path: 'jobspage', component:AppJobsComponent},
     { path: 'app-applied', component: AppAppliedComponent },
-    {path:'app-home', component:AppHomeComponent},
+    { path: '', redirectTo: 'app-home', pathMatch: 'full' }, 
+    { path: 'app-home', component: AppHomeComponent },
+
   ]},
   {path:'signup', component:SignupComponent},
   {path:'app-signup', component:AppSignupComponent},
@@ -38,7 +41,9 @@ const routes: Routes = [
     
     {path: 'home', component:JobssectionComponent},
     { path: 'jobs', component: JobsComponent },
-    { path: 'client-home', component: ClientHomeComponent }
+    { path: '', redirectTo: 'client-home', pathMatch: 'full' },
+    { path: 'client-home', component: ClientHomeComponent },
+    {path:'candidate', component:CandidatessectionComponent}
   ]
 }
   
