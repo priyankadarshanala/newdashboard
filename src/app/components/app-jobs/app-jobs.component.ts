@@ -1,7 +1,12 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NgToastService } from 'ng-angular-popup';
+import { AppStoreService } from 'src/app/app-store.service';
 import { AppliedJobsService } from 'src/app/applied-jobs.service';
 import { JobsdetailsService } from 'src/app/jobsdetails.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { AuthnService } from 'src/app/services/authn.service';
+import { UserStoreService } from 'src/app/services/user-store.service';
 
 @Component({
   selector: 'app-app-jobs',
@@ -22,10 +27,10 @@ export class AppJobsComponent implements OnInit {
  
   resumeData: any = {};
   
-  
+  appliedUsername:string='';
 id:any;
 
-  constructor(private jobsint:JobsdetailsService, private appliedJobsService: AppliedJobsService, private http: HttpClient) { 
+  constructor( private toast: NgToastService,private jobsint:JobsdetailsService, private appliedJobsService: AppliedJobsService, private http: HttpClient, private authn:AuthnService, private userStore:AppStoreService) { 
     this.totalPages = Math.ceil(this.jobsList.length / this.itemsPerPage);
     this.generatePageNumbers();
   }
@@ -76,7 +81,14 @@ id:any;
   
   istrue = false
   ngOnInit(): void {
-    this.jobsint.getmethod().subscribe(data => {
+
+    this.userStore.getFullNameFromStore()
+    .subscribe(val=>{
+      const fullNameFromToken = this.authn.getfullNameFromToken();
+      this.appliedUsername = val || fullNameFromToken
+    });
+
+    this.jobsint.getmethod(this.appliedUsername).subscribe(data => {
       this.jobsList = data;
       
       this.totalPages = Math.ceil(this.jobsList.length / this.itemsPerPage);
@@ -87,23 +99,25 @@ id:any;
     });
   }
 
+  apply(username: string, item: any) {
+    // Assuming you have a way to get the username (e.g., from authentication or user input)
+    // If not, you'll need to obtain the username before calling this method
   
-  apply(item: any) {
-    const endpoint = 'https://localhost:7058/api/Applied/ApplyForJob';
-  
-    this.http.post(endpoint, { jobsObj: item }).subscribe(
+    this.jobsint.postappliedByUser(this.appliedUsername, item).subscribe(
       response => {
         console.log('Applied for the job:', response);
-        alert("Job applied success")
-      
-         item.ischecked=false
-  
-        
-       
+        alert("Job applied successfully");
+        this.toast.success({detail:"Job applied successfully", duration: 3000});
+        item.ischecked = true;
       }
     );
-
-       }
+  
+    }
+  
+  
+   
+  
+  
       
 
        cancelUpload() {

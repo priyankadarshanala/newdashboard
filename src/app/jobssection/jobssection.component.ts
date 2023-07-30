@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { JobsdetailsService } from '../jobsdetails.service';
 import { Location } from '@angular/common';
+import { AuthService } from '../services/auth.service';
+import { UserStoreService } from '../services/user-store.service';
+import { NgToastService } from 'ng-angular-popup';
 
 
 @Component({
@@ -18,9 +21,9 @@ export class JobssectionComponent implements OnInit {
   selectedJob: any = {};
  
   showEditFormFlag = false;
-
-  
-  constructor(private jobsint:JobsdetailsService , private location: Location) { 
+  userId: number | undefined;
+  username: string = '';
+  constructor( private toast: NgToastService,private jobsint:JobsdetailsService , private location: Location, private auth:AuthService, private userStore: UserStoreService) { 
     this.totalPages = Math.ceil(this.jobsList.length / this.itemsPerPage);
     this.generatePageNumbers();
   }
@@ -65,12 +68,22 @@ export class JobssectionComponent implements OnInit {
   
   istrue = false
   ngOnInit(): void {
-    this.jobsint.getmethod().subscribe(data => {
-      this.jobsList = data;
-      this.totalPages = Math.ceil(this.jobsList.length / this.itemsPerPage);
-      this.generatePageNumbers();
-      this.updateDisplayedJobs();
+
+    this.userStore.getFullNameFromStore()
+    .subscribe(val=>{
+      const fullNameFromToken = this.auth.getfullNameFromToken();
+      this.username = val || fullNameFromToken
     });
+
+    if (this.username) {
+      this.jobsint.getJobsByUser(this.username).subscribe(data => {
+        this.jobsList = data;
+        this.totalPages = Math.ceil(this.jobsList.length / this.itemsPerPage);
+        this.generatePageNumbers();
+        this.updateDisplayedJobs();
+      });
+    }
+
   }
   
   // onSubmit(){
@@ -97,11 +110,14 @@ export class JobssectionComponent implements OnInit {
 onSubmit() {
   this.jobsint.editmethod(this.selectedJob.jobId, this.selectedJob).subscribe(
     (response) => {
-      // Handle success response
-      alert("Job updated successfully");
+     
+      this.toast.success({detail:"updated successfully", duration: 3000});
       console.log('Job updated successfully:', response);
+    
       this.hideEditForm(); // Hide the edit form after successful update
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     }
   );
 }

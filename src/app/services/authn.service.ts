@@ -25,11 +25,18 @@ export class AuthnService {
     return this.http.post<any>(`${this.Url}authenticate`,loginObj)
   }
 
-  signOut(){
-    localStorage.clear();
-    this.router.navigate(['login'])
-  }
+  // signOut(){
+  //   localStorage.clear();
+  //   this.router.navigate(['login'])
+  // }
 
+  signOut() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+    // Optionally, you can also clear the userPayload variable
+    localStorage.clear()
+    this.router.navigate(['login']);
+  }
   
 
   //client login

@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { AppStoreService } from 'src/app/app-store.service';
 import { AppliedJobsService } from 'src/app/applied-jobs.service';
 import { JobsdetailsService } from 'src/app/jobsdetails.service';
+import { AuthnService } from 'src/app/services/authn.service';
 
 interface Message {
 
@@ -108,8 +110,8 @@ export class AppHomeComponent implements OnInit {
   pages: number[] = []; 
   
   displayedJobsList: any[] = [];
-  
-  constructor(private jobsint:JobsdetailsService, private appliedJobsService: AppliedJobsService, private http: HttpClient) { 
+  appliedUsername:string='';
+  constructor(private jobsint:JobsdetailsService, private appliedJobsService: AppliedJobsService, private http: HttpClient, private userStore:AppStoreService, private authn:AuthnService) { 
     this.totalPages = Math.ceil(this.jobsList.length / this.itemsPerPage);
     this.generatePageNumbers();
   }
@@ -167,7 +169,17 @@ export class AppHomeComponent implements OnInit {
   
   istrue = false
   ngOnInit(): void {
-    this.jobsint.getmethod().subscribe(data => {
+
+
+    this.userStore.getFullNameFromStore()
+    .subscribe(val=>{
+      const fullNameFromToken = this.authn.getfullNameFromToken();
+      this.appliedUsername = val || fullNameFromToken
+    });
+
+
+
+    this.jobsint.getmethod(this.appliedUsername).subscribe(data => {
       this.jobsList = data;
       
       this.totalPages = Math.ceil(this.jobsList.length / this.itemsPerPage);

@@ -30,6 +30,7 @@
       <input type="text" placeholder="Enter Location" name="location" ngModel required>
       <h3>JOB DESCRIPTION</h3>
       <input placeholder="Enter JOB DESCRIPTION" name="jobDescription" ngModel required>
+      <input type="hidden" placeholder="Enter JOB DESCRIPTION" name="username"  [(ngModel)]="username" required>
 </div>
 </div>
       <button type="submit" [disabled]="!contactForm.valid" style="background-color: rgb(69, 156, 100);">Post Job</button>

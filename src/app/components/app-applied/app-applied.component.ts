@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { AppStoreService } from 'src/app/app-store.service';
 
 import { JobsdetailsService } from 'src/app/jobsdetails.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { AuthnService } from 'src/app/services/authn.service';
+import { UserStoreService } from 'src/app/services/user-store.service';
 
 @Component({
   selector: 'app-app-applied',
@@ -16,21 +20,34 @@ export class AppAppliedComponent implements OnInit {
 
   displayedAppliedJobs: any[] = [];
 
-
-  constructor(private jobsint: JobsdetailsService) {
+appliedUsername:string='';
+  constructor(private jobsint: JobsdetailsService, private authn:AuthnService, private userStore:AppStoreService) {
     this.totalPages = Math.ceil(this.appliedJobs.length / this.itemsPerPage);
     this.generatePageNumbers();
   }
   ngOnInit() {
-    this.appliedJobs=[];
-    this.jobsint.getapplied().subscribe((data:any)=>{
-    this.appliedJobs = data;
-    this.totalPages = Math.ceil(this.appliedJobs.length / this.itemsPerPage);
-    this.generatePageNumbers();
-    this.updateDisplayedAppliedJobs();
+
+    this.userStore.getFullNameFromStore().subscribe((val) => {
+      const fullNameFromToken = this.authn.getfullNameFromToken();
+      this.appliedUsername = val || fullNameFromToken;
+
+      if (this.appliedUsername) {
+        this.jobsint.getAppliedJobsByUser(this.appliedUsername).subscribe((data: any) => {
+          console.log('Applied Username:', this.appliedUsername);
+
+          this.appliedJobs = data;
+          this.totalPages = Math.ceil(this.appliedJobs.length / this.itemsPerPage);
+          this.generatePageNumbers();
+          this.updateDisplayedAppliedJobs();
+        });
+      }
+    });
+  
 
 
-   })
+
+
+
 }
 updateDisplayedAppliedJobs() {
   const startIndex = (this.currentPage - 1) * this.itemsPerPage;

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -38,20 +38,54 @@ applyjobsurl = "https://localhost:7058/api/Applied/ApplyForJob";
 getappliedurl = "https://localhost:7058/api/Applied/AppliedJobs";
 
 
-
+getbyuser ="https://localhost:7058"
 
 resumeuploadUrl="https://localhost:7058/api/ResumeClass";
 resumeget="https://localhost:7058/api/ResumeClass/8";
 private apiUrl = 'https://localhost:7058/api/Resumes';
+
+
 //client jobs get method
-getmethod(): Observable<any>{
-  return this.http.get<any>(this.Url)
+// getmethod(): Observable<any>{
+//   return this.http.get<any>(this.Url)
+// }
+
+getmethod(appliedUsername: string): Observable<any>{
+  const url = `${this.getbyuser}/api/Jobs/Jobs?appliedUsername=${appliedUsername}`;
+  return this.http.get<any>(url)
 }
 
-//client jobs post method
-postmethod(data:any): Observable<any>{
+getJobsByUser(username: string) {
+  // Modify the API URL to include the 'username' as a query parameter
+  const url = `${this.getbyuser}/api/Jobs?username=${username}`;
+  return this.http.get<any[]>(url);
+}
 
-  return this.http.post(this.baseUrl,data)
+// postappliedByUser(username: string, data: any) {
+//   // Modify the API URL to include the 'username' as a query parameter
+//   const url = `${this.getbyuser}/api/Applied/ApplyForJob`;
+//   return this.http.post<any[]>(url, { username: username, data });
+// }
+
+postappliedByUser(appliedusername: string, data: any): Observable<any[]> {
+  const url = `${this.getbyuser}/api/Applieds/ApplyForJob/${appliedusername}`;
+
+  const requestBody = {
+    JobsObj: data,
+    AppliedUsername: appliedusername
+  };
+
+  return this.http.post<any[]>(url, requestBody);
+}
+
+getAppliedJobsByUser(appliedUsername: string): Observable<any[]> {
+  const url = `${this.getbyuser}/api/Applieds/GetJobsByUser/${appliedUsername}`;
+  return this.http.get<any[]>(url);
+}
+
+postmethod(data: any) {
+  
+  return this.http.post(this.baseUrl,data);
 }
 
 //client jobs edit method
@@ -104,7 +138,6 @@ uploadResume(file: File): Observable<any> {
 getResumes(): Observable<JobResumeViewModel[]> {
   return this.http.get<JobResumeViewModel[]>(this.apiUrl);
 }
-
 
 
 

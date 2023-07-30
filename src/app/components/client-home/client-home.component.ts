@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AppliedJobsService } from 'src/app/applied-jobs.service';
 import { JobsdetailsService } from 'src/app/jobsdetails.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { UserStoreService } from 'src/app/services/user-store.service';
 
 @Component({
   selector: 'app-client-home',
@@ -89,8 +91,8 @@ export class ClientHomeComponent implements OnInit {
   pages: number[] = []; 
   
   displayedJobsList: any[] = [];
-  
-  constructor(private jobsint:JobsdetailsService, private appliedJobsService: AppliedJobsService, private http: HttpClient) { 
+  username:string='';
+  constructor(private jobsint:JobsdetailsService, private appliedJobsService: AppliedJobsService, private http: HttpClient, private userStore:UserStoreService, private auth:AuthService) { 
     this.totalPages = Math.ceil(this.jobsList.length / this.itemsPerPage);
     this.generatePageNumbers();
   }
@@ -141,16 +143,24 @@ export class ClientHomeComponent implements OnInit {
   
   istrue = false
   ngOnInit(): void {
-    this.jobsint.getmethod().subscribe(data => {
-      this.jobsList = data;
-      
-      this.totalPages = Math.ceil(this.jobsList.length / this.itemsPerPage);
-      this.generatePageNumbers();
-      this.updateDisplayedJobs();
-      this.startCarousel();
 
-      
+    this.userStore.getFullNameFromStore()
+    .subscribe(val=>{
+      const fullNameFromToken = this.auth.getfullNameFromToken();
+      this.username = val || fullNameFromToken
     });
+
+
+    if (this.username) {
+      this.jobsint.getJobsByUser(this.username).subscribe(data => {
+        this.jobsList = data;
+        this.totalPages = Math.ceil(this.jobsList.length / this.itemsPerPage);
+        this.generatePageNumbers();
+        this.updateDisplayedJobs();
+      });
+    }
+
+  
 
 
     setInterval(() => {
