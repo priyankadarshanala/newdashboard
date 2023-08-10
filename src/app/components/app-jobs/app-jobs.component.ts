@@ -4,10 +4,14 @@ import { NgToastService } from 'ng-angular-popup';
 import { AppStoreService } from 'src/app/app-store.service';
 import { AppliedJobsService } from 'src/app/applied-jobs.service';
 import { JobsdetailsService } from 'src/app/jobsdetails.service';
+import { Job } from 'src/app/models/job';
 import { AuthService } from 'src/app/services/auth.service';
 import { AuthnService } from 'src/app/services/authn.service';
 import { UserStoreService } from 'src/app/services/user-store.service';
-
+interface HighlightedText {
+  text: string;
+  highlight: boolean;
+}
 @Component({
   selector: 'app-app-jobs',
   templateUrl: './app-jobs.component.html',
@@ -30,9 +34,20 @@ export class AppJobsComponent implements OnInit {
   appliedUsername:string='';
 id:any;
 
+searchQuery!: string;
+searchResults: any[] | null = [];
+searchText: string = '';
+filteredJobs: Job[] = [];
+jobs: any;
+hasResults: boolean = true;
+recentSearches: any;
+
   constructor( private toast: NgToastService,private jobsint:JobsdetailsService, private appliedJobsService: AppliedJobsService, private http: HttpClient, private authn:AuthnService, private userStore:AppStoreService) { 
     this.totalPages = Math.ceil(this.jobsList.length / this.itemsPerPage);
     this.generatePageNumbers();
+    this.searchQuery = '';
+    this.searchResults = [];
+    this.filteredJobs = this.jobs;
   }
   updateDisplayedJobs() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
@@ -86,6 +101,8 @@ id:any;
     .subscribe(val=>{
       const fullNameFromToken = this.authn.getfullNameFromToken();
       this.appliedUsername = val || fullNameFromToken
+
+      this.resumeData.name = this.appliedUsername;
     });
 
     this.jobsint.getmethod(this.appliedUsername).subscribe(data => {
@@ -100,8 +117,7 @@ id:any;
   }
 
   apply(username: string, item: any) {
-    // Assuming you have a way to get the username (e.g., from authentication or user input)
-    // If not, you'll need to obtain the username before calling this method
+   
   
     this.jobsint.postappliedByUser(this.appliedUsername, item).subscribe(
       response => {
@@ -159,6 +175,74 @@ id:any;
 
 
    
+
+
+
+      search() {
+        this.searchResults = this.jobsList.filter(job => {
+          return job.jobTitle.toLowerCase().includes(this.searchText.toLowerCase());
+        });
+        if (this.searchText && !this.recentSearches.includes(this.searchText)) {
+          this.recentSearches.unshift(this.searchText);
+        }
+        this.searchText = '';
+      }
+      
+      selectResult() {
+        if (this.searchResults && this.searchResults.length > 0) {
+          const selectedResult = this.searchResults[0];
+          // Assuming the first result is selected
+          // Do something with the selected result, e.g., display details, navigate to a page, etc.
+          // ...
+          // Close the search or perform any other desired actions
+          this.searchQuery = '';
+          this.searchResults = null;
+        }
+      }
+      clearSearch() {
+        this.searchText = ''; // Clear the search text
+        this.filteredJobs = this.jobs; // Reset the filtered jobs to show all jobs
+        this.hasResults = true;
+        console.log('Clear search clicked');
+      }
+      onEnterPressed(event: any) {
+        event.preventDefault();
+        // Implement your logic when the enter key is pressed
+        console.log('Enter key pressed');
+        this.search();
+        if (event.key === 'Enter') {
+          this.search(); // Call the search function when Enter is pressed
+        } // Call the search method on enter key press
+      }
+      highlightSearchText(text: string): string {
+        if (!this.searchText || !text) {
+          return text;
+        }
+      
+        const searchRegex = new RegExp(this.searchText, 'gi');
+        return text.replace(searchRegex, match => `<span class="highlight">${match}</span>`);
+      }
+      
+      highlightText(text: string): HighlightedText[] {
+        const highlightedText: HighlightedText[] = [];
+      
+        if (this.searchText && text) {
+          const parts = text.split(new RegExp(`(${this.searchText})`, 'gi'));
+      
+          parts.forEach(part => {
+            if (part.toLowerCase() === this.searchText.toLowerCase()) {
+              highlightedText.push({ text: part, highlight: true });
+            } else {
+              highlightedText.push({ text: part, highlight: false });
+            }
+          });
+        } else {
+          highlightedText.push({ text: text, highlight: false });
+        }
+      
+        return highlightedText;
+      }
+
       
     
 }

@@ -21,6 +21,11 @@ import { AppAppliedComponent } from './components/app-applied/app-applied.compon
 import { AppHomeComponent } from './components/app-home/app-home.component';
 import { ClientHomeComponent } from './components/client-home/client-home.component';
 import { CandidatessectionComponent } from './components/candidatessection/candidatessection.component';
+import { JobsdataComponent } from './admin/jobsdata/jobsdata.component';
+import { RecentapplicantsComponent } from './admin/recentapplicants/recentapplicants.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FilterPipe } from './filter.pipe';
+import { HighlightPipePipe } from './highlight-pipe.pipe';
 
 
 
@@ -46,6 +51,10 @@ import { CandidatessectionComponent } from './components/candidatessection/candi
     AppHomeComponent,
     ClientHomeComponent,
     CandidatessectionComponent,
+    JobsdataComponent,
+    RecentapplicantsComponent,
+    FilterPipe,
+    HighlightPipePipe,
    
     
    
@@ -57,6 +66,7 @@ import { CandidatessectionComponent } from './components/candidatessection/candi
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
+    FontAwesomeModule,
     NgToastModule
     
   ],

@@ -1,60 +1,79 @@
-<div class="container">
-  <ng-container *ngFor="let jobResume of jobResumes">
-    <div class="job-details">
-      <h3>
-        Job Details
-        <span class="toggle-icon" (click)="toggleResumes(jobResume)">
-          {{ jobResume.showResumes ? '-' : '+' }}
-        </span>
-      </h3>
-      <table class="table table-success table-striped" style="font-size: 16px;">
-        <thead>
-          <tr>
-            <th>Job ID</th>
-            <th>Company Name</th>
-            <th>Position Title</th>
-            <th>Experience</th>
-            <th>Skills</th>
-            <th>Job Type</th>
-            <th>Posted Date</th>
-            <th>Location</th>
-            <th>Job Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{{ jobResume.jobId }}</td>
-            <td>{{ jobResume.companyName }}</td>
-            <td>{{ jobResume.jobTitle }}</td>
-            <td>{{ jobResume.experience }}</td>
-            <td>{{ jobResume.skills }}</td>
-            <td>{{ jobResume.jobType }}</td>
-            <td>{{ jobResume.postedDate }}</td>
-            <td>{{ jobResume.location }}</td>
-            <td>{{ jobResume.jobDescription }}</td>
-          </tr>
-        </tbody>
-      </table>
 
-      <div [ngClass]="{'applicants-resumes': true, 'active': jobResume.showResumes}">
-        <h3>Applicants' Resumes</h3>
-        <table>
-          <tr>
-            <th>Applicant Name</th>
-            <th>Email</th>
-            <th>Resume</th>
-          </tr>
-          <tr *ngFor="let resume of jobResume.resumes">
-            <td>{{ resume.applicantName }}</td>
-            <td>{{ resume.applicantEmail }}</td>
-            <td>
-              <a [href]="'data:application/octet-stream;base64,' + resume.resumeFileData"
-                 [download]="resume.resumeFileName">Download Resume</a>
-            </td>
-          </tr>
-        </table>
+
+
+
+
+
+<!-- candidatessection.component.html -->
+<div class="body">
+  <div class="container">
+    <div class="jobs-row">
+      <div class="job-box" *ngFor="let item of jobResumes">
+        <h3>{{ item.jobTitle }}</h3>
+        <p><span style="color: rgb(8, 8, 8); font-weight: 600;">Company: </span>{{ item.companyName }}</p>
+        <p><span style="color: rgb(8, 8, 8); font-weight: 600;">Experience: </span>{{ item.experience }}</p>
+        <p><span style="color: rgb(8, 8, 8); font-weight: 600;">Skills: </span>{{ item.skills }}</p>
+        <p><span style="color: rgb(8, 8, 8); font-weight: 600;">Job Type: </span>{{ item.jobType }}</p>
+        <p><span style="color: rgb(8, 8, 8); font-weight: 600;">Location: </span>{{ item.location }}</p>
+        <p><span style="color: rgb(8, 8, 8); font-weight: 600;">Job Description: </span>{{ item.jobDescription }}</p>
+        <p>
+          <button type="button" class="btn btn-primary mr-1" (click)="openResumesPopup(item)">
+            View Applicants
+          </button>
+        </p>
       </div>
     </div>
-  </ng-container>
+  </div>
+
+ 
+
+
+  <div id="popup-form" class="popup-overlay" [ngClass]="{ 'show': showResumesPopup }">
+    <div class="popup-content">
+      <h2 style="text-align: center;">Applicants' Details</h2>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Resume</th>
+          <th>status</th>
+       
+        <th *ngIf="!selectedResumes[0]?.isStatusSelected">Schedule Meeting</th>
+  <th *ngIf="!selectedResumes[0]?.isStatusSelected">Reject</th>
+        </tr>
+        <tr *ngFor="let resume of selectedResumes">
+          <td>{{resume.applicantName}}</td>
+       
+          <td>{{ resume.applicantEmail }}</td>
+           <td>
+            <button type="button" class="btn btn-primary" (click)="downloadResume(resume)">Download Resume</button>
+          </td>
+        <td> {{ getFormattedStatus(resume) }}</td>
+         
+         
+          <td>
+            <input *ngIf="!resume.isStatusSelected" type="datetime-local" [(ngModel)]="meetingDates[resume.resumeId]" [min]="getMinMeetingDate()" [max]="getMaxMeetingDate()" />
+            <button *ngIf="!resume.isStatusSelected" type="button" class="btn btn-primary" (click)="scheduleMeeting(resume)">Schedule</button>
+          </td>
+          <td>
+         
+          </td>
+        
+          <!-- Show/hide rejection input and button -->
+          <td>
+            <input *ngIf="!resume.isStatusSelected" type="text" [(ngModel)]="rejectionReasons[resume.resumeId]" placeholder="Enter Rejection Reason" />
+            <button *ngIf="!resume.isStatusSelected" type="button" class="btn btn-danger" (click)="rejectResume(resume)">Reject</button>
+          </td>
+          <td>
+           
+          </td>
+        </tr>
+      </table>
+      <div class="form-buttons">
+        <button type="button" class="btn btn-danger" (click)="closeResumesPopup()">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
+
 

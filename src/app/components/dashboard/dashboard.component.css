@@ -1,3 +1,28 @@
+
+
+
+
+
+
+
+
+.navbar-nav .nav-item:hover .nav-link,
+.navbar-nav .nav-item.active .nav-link,
+.navbar-nav .nav-item:focus .nav-link {
+  /* Change the color to your desired highlight color */
+  font-weight: bold; /* Add any additional styling for the highlight effect */
+  color: aquamarine;
+  
+  
+}
+
+.navbar-nav .nav-link {
+  margin-right: 20px; /* Adjust the value to increase or decrease the space */
+}
+
+
+
+
 .sign-button{
   background: #9A1663; 
   color: #fff; 

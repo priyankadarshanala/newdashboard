@@ -4,28 +4,51 @@ import { Location } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { UserStoreService } from '../services/user-store.service';
 import { NgToastService } from 'ng-angular-popup';
-
+import { CommonModule } from '@angular/common';
+import { Job } from '../models/job';
+import { HighlightPipePipe } from '../highlight-pipe.pipe';
+import { FilterPipe } from '../filter.pipe';
+interface HighlightedText {
+  text: string;
+  highlight: boolean;
+}
 
 @Component({
   selector: 'app-jobssection',
   templateUrl: './jobssection.component.html',
+  providers: [HighlightPipePipe, FilterPipe],
   styleUrls: ['./jobssection.component.scss']
 })
 export class JobssectionComponent implements OnInit {
+
   jobsList: any[] = [];
-  itemsPerPage: number = 12; 
-  currentPage: number = 1; 
-  totalPages: number = 0; 
-  pages: number[] = []; 
+  itemsPerPage: number = 12;
+  currentPage: number = 1;
+  totalPages: number = 0;
+  pages: number[] = [];
   displayedJobsList: any[] = [];
   selectedJob: any = {};
- 
+
+  searchQuery!: string;
+  searchResults: any[] | null = [];
+  searchText: string = '';
+  filteredJobs: Job[] = [];
+  jobs: any;
+  recentSearches: any;
+
   showEditFormFlag = false;
+  hasResults: boolean = true;
+
+
+ 
   userId: number | undefined;
   username: string = '';
   constructor( private toast: NgToastService,private jobsint:JobsdetailsService , private location: Location, private auth:AuthService, private userStore: UserStoreService) { 
     this.totalPages = Math.ceil(this.jobsList.length / this.itemsPerPage);
     this.generatePageNumbers();
+    this.searchQuery = '';
+    this.searchResults = [];
+    this.filteredJobs = this.jobs;
   }
   updateDisplayedJobs() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
@@ -104,37 +127,127 @@ export class JobssectionComponent implements OnInit {
   }
 
 
-// editdata(data:any){
-//   this.jobsint.edit(jobId,data).subscribe
+
 
 onSubmit() {
   this.jobsint.editmethod(this.selectedJob.jobId, this.selectedJob).subscribe(
     (response) => {
-     
+
       this.toast.success({detail:"updated successfully", duration: 3000});
       console.log('Job updated successfully:', response);
-    
+
       this.hideEditForm(); // Hide the edit form after successful update
       setTimeout(() => {
         window.location.reload();
-      }, 3000);
+      }, 2000);
     }
   );
 }
 
 delete(jobId:number){
-  if (confirm('Are you sure you want to delete this job?')){
+ 
   this.jobsint.deletemethod(jobId).subscribe(
     (response) =>{
-      alert("Job Deleted Successfully")
+     
+      this.toast.success({detail:"Deleted successfully", duration: 3000});
       console.log("deleted", response)
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     }
   )
 }
+
+
+
+
+search() {
+  this.searchResults = this.jobsList.filter(job => {
+    return job.jobTitle.toLowerCase().includes(this.searchText.toLowerCase());
+  });
+  if (this.searchText && !this.recentSearches.includes(this.searchText)) {
+    this.recentSearches.unshift(this.searchText);
+  }
+  this.searchText = '';
 }
 
+selectResult() {
+  if (this.searchResults && this.searchResults.length > 0) {
+    const selectedResult = this.searchResults[0];
+    // Assuming the first result is selected
+    // Do something with the selected result, e.g., display details, navigate to a page, etc.
+    // ...
+    // Close the search or perform any other desired actions
+    this.searchQuery = '';
+    this.searchResults = null;
+  }
 }
+clearSearch() {
+  this.searchText = ''; // Clear the search text
+  this.filteredJobs = this.jobs; // Reset the filtered jobs to show all jobs
+  this.hasResults = true;
+  console.log('Clear search clicked');
+}
+onEnterPressed(event: any) {
+  event.preventDefault();
+  // Implement your logic when the enter key is pressed
+  console.log('Enter key pressed');
+  this.search();
+  if (event.key === 'Enter') {
+    this.search(); // Call the search function when Enter is pressed
+  } // Call the search method on enter key press
+}
+highlightSearchText(text: string): string {
+  if (!this.searchText || !text) {
+    return text;
+  }
+
+  const searchRegex = new RegExp(this.searchText, 'gi');
+  return text.replace(searchRegex, match => `<span class="highlight">${match}</span>`);
+}
+
+highlightText(text: string): HighlightedText[] {
+  const highlightedText: HighlightedText[] = [];
+
+  if (this.searchText && text) {
+    const parts = text.split(new RegExp(`(${this.searchText})`, 'gi'));
+
+    parts.forEach(part => {
+      if (part.toLowerCase() === this.searchText.toLowerCase()) {
+        highlightedText.push({ text: part, highlight: true });
+      } else {
+        highlightedText.push({ text: part, highlight: false });
+      }
+    });
+  } else {
+    highlightedText.push({ text: text, highlight: false });
+  }
+
+  return highlightedText;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
 
 
 

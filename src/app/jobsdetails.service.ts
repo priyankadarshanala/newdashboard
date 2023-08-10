@@ -3,10 +3,17 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 interface ResumeViewModel {
+  resumeId:number;
   applicantName: string;
   applicantEmail: string;
   resumeFileName: string;
   resumeFileData: string; // This will be a base64 encoded string
+  rejectionReason: string; // Add this property to support rejectionReason
+  scheduleMeetingDate: Date; // Add this property to support scheduleMeetingDate
+  jobId: number;
+  status:string
+  statusInput?: string;
+  isStatusSelected: boolean;
 }
 
  interface JobResumeViewModel {
@@ -32,7 +39,7 @@ export class JobsdetailsService {
 
 
 baseUrl = 'https://localhost:7058/api/Jobs/Addjobsdata';
-Url = 'https://localhost:7058/api/Jobs/Jobs';
+Url = 'https://localhost:7058/api/Jobs';
 applicantUrl = "https://localhost:7058/api/applicant";
 applyjobsurl = "https://localhost:7058/api/Applied/ApplyForJob";
 getappliedurl = "https://localhost:7058/api/Applied/AppliedJobs";
@@ -44,11 +51,7 @@ resumeuploadUrl="https://localhost:7058/api/ResumeClass";
 resumeget="https://localhost:7058/api/ResumeClass/8";
 private apiUrl = 'https://localhost:7058/api/Resumes';
 
-
-//client jobs get method
-// getmethod(): Observable<any>{
-//   return this.http.get<any>(this.Url)
-// }
+statusget = "https://localhost:7058/api/Resumes/"
 
 getmethod(appliedUsername: string): Observable<any>{
   const url = `${this.getbyuser}/api/Jobs/Jobs?appliedUsername=${appliedUsername}`;
@@ -56,19 +59,15 @@ getmethod(appliedUsername: string): Observable<any>{
 }
 
 getJobsByUser(username: string) {
-  // Modify the API URL to include the 'username' as a query parameter
+  
   const url = `${this.getbyuser}/api/Jobs?username=${username}`;
   return this.http.get<any[]>(url);
 }
 
-// postappliedByUser(username: string, data: any) {
-//   // Modify the API URL to include the 'username' as a query parameter
-//   const url = `${this.getbyuser}/api/Applied/ApplyForJob`;
-//   return this.http.post<any[]>(url, { username: username, data });
-// }
+
 
 postappliedByUser(appliedusername: string, data: any): Observable<any[]> {
-  const url = `${this.getbyuser}/api/Applieds/ApplyForJob/${appliedusername}`;
+  const url = `${this.getbyuser}/api/Applied/ApplyForJob/${appliedusername}`;
 
   const requestBody = {
     JobsObj: data,
@@ -79,13 +78,13 @@ postappliedByUser(appliedusername: string, data: any): Observable<any[]> {
 }
 
 getAppliedJobsByUser(appliedUsername: string): Observable<any[]> {
-  const url = `${this.getbyuser}/api/Applieds/GetJobsByUser/${appliedUsername}`;
+  const url = `${this.getbyuser}/api/Applied/GetJobsByUser/${appliedUsername}`;
   return this.http.get<any[]>(url);
 }
 
 postmethod(data: any) {
   
-  return this.http.post(this.baseUrl,data);
+  return this.http.post(this.Url,data);
 }
 
 //client jobs edit method
@@ -135,12 +134,37 @@ uploadResume(file: File): Observable<any> {
 
 
 
-getResumes(): Observable<JobResumeViewModel[]> {
-  return this.http.get<JobResumeViewModel[]>(this.apiUrl);
+getResumes(username:string): Observable<JobResumeViewModel[]> {
+  const url = `${this.getbyuser}/api/Resumes?username=${username}`;
+  return this.http.get<JobResumeViewModel[]>(url);
 }
 
 
 
 
+
+
+
+getScheduleMeetingMessage(resumeId: number): Observable<string> {
+  const url = `${this.statusget}${resumeId}/ScheduleMeeting`;
+  return this.http.get<string>(url);
+}
+
+getRejectionMessage(resumeId: number): Observable<string> {
+  const url = `${this.statusget}${resumeId}/Reject`;
+  return this.http.get<string>(url);
+}
+
+
+
+getScheduleMeetingDateByJobAndName(jobId: number, name: string): Observable<any> {
+  const url = `${this.statusget}GetScheduleMeetingDateByJobAndName?jobId=${jobId}&name=${name}`;
+  return this.http.get<any>(url);
+}
+
+getRejectionReasonByJobAndName(jobId: number, name: string): Observable<any> {
+  const url = `${this.statusget}GetRejectionReasonByJobAndName?jobId=${jobId}&name=${name}`;
+  return this.http.get<any>(url);
+}
 
 }

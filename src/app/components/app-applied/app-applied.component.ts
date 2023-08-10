@@ -5,6 +5,33 @@ import { JobsdetailsService } from 'src/app/jobsdetails.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { AuthnService } from 'src/app/services/authn.service';
 import { UserStoreService } from 'src/app/services/user-store.service';
+interface ResumeViewModel {
+  resumeId:number;
+  applicantName: string;
+  applicantEmail: string;
+  resumeFileName: string;
+  resumeFileData: string; // This will be a base64 encoded string
+  RejectionReason: string; // Add this property to support rejectionReason
+  scheduleMeetingDate: Date; // Add this property to support scheduleMeetingDate
+  jobId: number;
+  Status:string
+  statusInput?: string;
+  IsStatusSelected: boolean;
+}
+
+ interface JobResumeViewModel {
+  jobId: number;
+  companyName: string;
+  jobTitle: string;
+  experience: string;
+  skills: string;
+  jobType: string;
+  postedDate: string;
+  location: string;
+  jobDescription: string;
+  resumes: ResumeViewModel[];
+}
+
 
 @Component({
   selector: 'app-app-applied',
@@ -19,7 +46,8 @@ export class AppAppliedComponent implements OnInit {
   pages: number[] = [];
 
   displayedAppliedJobs: any[] = [];
-
+  
+  showStatusMessage: boolean = false;
 appliedUsername:string='';
   constructor(private jobsint: JobsdetailsService, private authn:AuthnService, private userStore:AppStoreService) {
     this.totalPages = Math.ceil(this.appliedJobs.length / this.itemsPerPage);
@@ -44,11 +72,11 @@ appliedUsername:string='';
     });
   
 
+   
+  }
 
 
 
-
-}
 updateDisplayedAppliedJobs() {
   const startIndex = (this.currentPage - 1) * this.itemsPerPage;
   const endIndex = startIndex + this.itemsPerPage;
@@ -85,5 +113,62 @@ generatePageNumbers() {
   }
 }
 
+
+
+
+viewJobDetails(jobId: number) {
+  console.log('Clicked JobId:', jobId);
+
+  const jobItem = this.displayedAppliedJobs.find(item => item.jobId === jobId);
+
+  if (jobItem) {
+    // Fetch the schedule meeting date for the clicked job from the Resumes API
+    this.jobsint.getScheduleMeetingDateByJobAndName(jobId, this.appliedUsername).subscribe(
+      (scheduleMeetingDate) => {
+        console.log('Schedule Meeting Date:', scheduleMeetingDate);
+
+        if (scheduleMeetingDate) {
+          // Update the job object with the schedule meeting date
+          jobItem.scheduleMeetingDate = scheduleMeetingDate;
+        } else {
+          // If the schedule meeting date is not available, set it to null or an appropriate message
+          jobItem.scheduleMeetingDate = null; // Or 'Schedule meeting date not available' or any custom message
+        }
+       
+      },
+      (error) => {
+        console.error(error);
+        // If an error occurs while fetching the schedule meeting date, set it to null or an appropriate message
+        jobItem.scheduleMeetingDate =null; // Or 'Error fetching schedule meeting date' or any custom message
+       
+      }
+    );
+
+
+  this.jobsint.getRejectionReasonByJobAndName(jobId, this.appliedUsername).subscribe(
+    (response) => {
+      const rejectionReason = response.rejectionReason;
+      console.log('Rejection Reason:', rejectionReason);
+
+      // Update the job object with the rejection reason
+      const jobItem = this.displayedAppliedJobs.find(item => item.jobId === jobId);
+      if (jobItem) {
+        jobItem.rejectionReason = rejectionReason ;
+        
+      }
+     
+      
+    },
+    (error) => {
+      console.error(error);
+     
+    }
+  );
+
+}
+
+
+
+}
   
 }

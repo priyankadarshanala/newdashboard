@@ -16,7 +16,9 @@
   <div class="body">
     <div class="container">
 <div class="jobs-row">
-      <div class="job-box" *ngFor="let item of displayedAppliedJobs">
+      <div class="job-box" *ngFor="let item of displayedAppliedJobs" (click)="viewJobDetails(item.jobId)" >
+      
+        <!-- <h1>{{item.jobId}}</h1> -->
         <h3>{{ item.jobTitle }}</h3>
         <p><span style="color: rgb(8, 8, 8); font-weight: 600;">Company: </span> {{ item.companyName }}</p>
         <p><span style="color: rgb(8, 8, 8); font-weight: 600;">Experience: </span> {{ item.experience }}</p>
@@ -24,7 +26,11 @@
         <p><span style="color: rgb(8, 8, 8); font-weight: 600;">Job Type: </span>{{ item.jobType }}</p>
         <p><span style="color: rgb(8, 8, 8); font-weight: 600;">Location: </span>{{ item.location }}</p>
         <p><span style="color: rgb(8, 8, 8); font-weight: 600;">Job Description: </span> {{ item.jobDescription }}</p>
-       
+        <button>click to view job status</button>
+        <p *ngIf="showStatusMessage">Status: Waiting</p>
+         <p *ngIf="item.rejectionReason ">Rejection Reason: {{ item.rejectionReason }}</p>
+        <p *ngIf="item.scheduleMeetingDate ">Schedule Meeting Date: {{ item.scheduleMeetingDate   }}</p>
+      
       </div>
     </div>
     

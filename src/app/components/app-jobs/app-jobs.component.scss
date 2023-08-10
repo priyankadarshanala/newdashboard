@@ -13,12 +13,24 @@
     justify-content: space-between;
   }
   .job-box {
-  width: 280px; /* Set the desired width for each job box */
-  height: 400px; /* Set the desired height for each job box */
+  width: 320px; /* Set the desired width for each job box */
+  height: 530px; /* Set the desired height for each job box */
   border: 5px solid #ccc;
   padding: 10px;
   margin: 10px;
 }
+
+
+.border
+
+  {
+
+ border-color: black;
+
+ width: 1300px;
+
+  }
+
 
 
 .job-box:hover{
@@ -92,7 +104,7 @@
     height: 440px;
     width: 830px;
     border-radius: 25px;
-    background-color: rgb(171, 241, 219);
+    background-color:  #deb1d3;
     
   
     
@@ -124,3 +136,168 @@
     color: black; /* Change the text color to ensure readability */
     /* Add any additional styling for the highlight effect */
   }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+  // form {
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: center;
+  // }
+  
+  input {
+    margin-bottom: 10px;
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+
+
+
+
+
+  
+
+ 
+  
+  .highlighted {
+
+    background-color:rgb(234, 128, 146);
+
+    font-weight: bold;
+
+  }
+
+.border
+
+  {
+
+ border-color: black;
+
+ width: 1300px;
+
+  }
+
+  .search-bar {
+
+   position: relative;
+
+  
+  
+ }
+
+ .search-bar input[type="text"] {
+
+   padding-right: 35px; /* Adjust the padding to create space for the icon */
+
+ }
+
+
+
+
+ .search-bar .clear-button {
+
+   position: absolute;
+
+   right: 10px; /* Adjust the right value to position the clear button */
+
+   top: 50%;
+
+   transform: translateY(-50%);
+
+   border: none;
+   
+ 
+
+   background: transparent;
+
+   cursor: pointer;
+
+ }
+
+ .search-bar .clear-button i {
+
+   color: #999; /* Adjust the color of the clear button icon */
+
+ }
+
+
+ .result {
+
+   display: flex;
+
+   align-items: center;
+
+   padding: 10px;
+
+   cursor: pointer;
+
+   display: flex;
+
+   align-items: center;
+
+ }
+
+ .search-text {
+
+   flex-grow: 1;
+
+   margin-right: 20px;
+
+ }
+
+ .remove-icon {
+
+   cursor: pointer;
+
+   margin-left: 10px;
+
+ }
+
+
+.search-icon
+
+ {
+
+  position: absolute;
+
+  top: 49%;
+
+  transform: translateY(-50%) scaleX(-1);
+
+  left: 20px;
+
+  cursor: pointer;
+ 
+
+}
+
+.clear-icon {
+
+  right: 15px;
+  position: absolute;
+  cursor: pointer;
+  transform: translateY(-50%);
+  top: 50%; /* Adjust the value to position the clear icon */
+
+}
+
+
+
+.form-control {
+  text-indent: 25px; /* Adjust the value as needed to move the placeholder */
+  border-block: 1px;
+}
+

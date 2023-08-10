@@ -1,157 +1,94 @@
-// html, body {
-//     height: 100vh;
-    
-//   padding: 0%;
-//     background-color: lightgray;
-//   }
-  
-//   .container {
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     align-items: center;
-//     height: 100vh;
-//   }
+.text-danger{
+  font-size: 20px;
+}
 
 
-  
-// .row{
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-  
-// }
-// .mar{
-//   margin-left: 50px;
-// }
-  
-//   form {
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//   }
-  
-//   input {
-//     margin-bottom: 10px;
-//     width: 300px;
-//     padding: 10px;
-//     font-size: 16px;
-//   }
+h3 {
+  color: #020000;
+  text-align: center;
+ // margin-top: 20px;
+
+}
+
+.form-heading {
+ font-weight: bold;
+ border-bottom: 2px solid #333;
+ padding-bottom: 5px;
+ margin-bottom: 0%;
+}
+
+.form-heading-id,
+.form-heading-company {
+ border-right: 2px solid #333;
+ padding-right: 10px;
+ margin-right: 10px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+textarea {
+ width: 100%;
+ padding: 0%;
+ border-radius: 10px;
+ border: 1px solid #ccc;
+  font-size: 25px;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+textarea:focus {
+ outline: none;
+ border-color: rgb(0, 23, 80);
+}
+
+.button-container {
+ text-align: center;
+ margin-top: 20px;
+}
+
+button[type="submit"] {
+ background-color: rgb(0, 191, 255);
+ color: rgb(249, 247, 248);
+ // font-weight: 500;
+ border: none;
+ padding: 12px 18px;
+ border-radius: 5px;
+ cursor: pointer;
+ font-size: 20px;
+}
 
 
-//   .total{
-//     display: flex;
-//     flex-direction: row;
-//     justify-content: center;
-//     align-items: center;
-//   }
-  
-  
-//   button {
-//     padding: 10px 20px;
-//     font-size: 16px;
-//   }
-html, body {
-
-  // height: 100vh;
-
+.heading{
+ font-weight: 500;
+ font-size: 24px;
  
-
-padding: 0%;
-
-  background-color: lightgray;
+}
+.fields{
+padding: 150px;
 
 }
 
-
-
-.container {
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  align-items: center;
-
-  height: 100vh;
+.head{
+text-align: center;
+padding: 25px;
+font-size: 50px;
 
 }
-
-
-
-form {
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-}
-
-
-
-input {
-
-  margin-bottom: 10px;
-
-  width: 300px;
-
-  padding: 10px;
-
-  font-size: 16px;
-
-}
-
-
-
-button {
-
-  padding: 10px 20px;
-
-  font-size: 16px;
-
-}
-
 
 
 
 body {
 
-  display: flex;
 
-  justify-content: center;
+ background-color: #ebf6fb;
+ 
+ background: -webkit-linear-gradient(to right, #cbe1e4, #e0dac1, #e4c3df);  
+ background: linear-gradient(to right, #e7d0dc, #cbe3e2, #e6cbcb); 
 
-  align-items: center;
-
-  // height: 100vh;
-
-  background-image: url('https://www.shrednations.com/wp-content/uploads/Clean-Desks-are-Professional.jpg'); 
-
-  background-size: cover;
-
-  background-repeat: no-repeat;
-
+ background: linear-gradient(to bottom, #c4dae2 0%, #e4c7d4 100%)
 }
 
 
 
 
-.form-container {
-
-  width: 800px;
-
-  padding: 20px;
-
-  background-color: #ffffff;
-
-  // background-color: rgba(255, 255, 255, 0.8);
-
-  border-radius: 10px;
-
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-}

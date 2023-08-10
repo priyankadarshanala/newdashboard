@@ -1,174 +1,75 @@
-.jobs-row {
-    display: flex;
-    flex-wrap: wrap;
-    // justify-content: space-between;
-    justify-content: center;
-  }
-  .job-box {
-  width: 280px; /* Set the desired width for each job box */
-  height: 300px; /* Set the desired height for each job box */
-  border: 5px solid #ccc;
-  padding: 10px;
-  margin: 10px;
-  
-}
-  .job-box h3 {
-    margin-top: 0;
-  }
-
-  .job-box:hover{
-   
-      background-color: rgb(212, 180, 180);
-    
-  }
-
-  .job-box p {
-    margin-bottom: 5px;
-  }
-.heading{
-    text-align: center;
-}
-.button{
-    // display: flex;
-    // justify-content: center;
-    // text-align: center;
-    font-size: 30px;
-
-}
-.background{
-    
-        background-color: #f0e1b1;
-       
-    
-}
-
-.butt{
-  text-align: center;
-  padding: 30px;
 
 
-}
-  
-.slideshow-container {
-  width: 100%;
-  height: 300px;
-  overflow: hidden;
-  position: relative;
-  background-color:#538cca;
-  margin-top: 80px;
-}
 
-.testimonial-slide {
+.hide-footer {
   display: none;
-
-
+  
 }
 
 
-.testimonial-slide.active {
+.top-section {
+  padding-top: 25px;
+  @media only screen and (max-width: 1600px) {
+    width: 1330px;
+  }
+  @media only screen and (max-width: 1500px) {
+    width: 1180px;
+  }
+  @media only screen and (max-width: 1400px) {
+    width: 1080px;
+  }
+  @media only screen and (max-width: 1200px) {
+    width: 980px;
+  }
+}
+
+
+/* Add responsive table style */
+.table-responsive {
+  overflow-x: auto;
+}
+.middle-section {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
- 
-}
-.testimonial-box {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
 }
 
-.test-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
- 
+.widget {
+  height: 550px;
+  background-color: #a78aa1;
+  border-radius: 5px;
+  margin: 100px;
+  margin-top: 50px;
+  box-shadow: 5px 5px 5px #939393;
 }
 
-
-.in{
-border-radius: 8px;
+.widget.left {
+  flex: 1;
+  max-width: 800px;
+  margin-right: 20px;
+  margin-left: 20px;
 }
 
-.testimonial-content {
-  background-color: #fff;
-  padding: 20px;
+@media only screen and (max-width: 1600px) {
+  .widget.left {
+    max-width: 790px;
+  }
 }
 
-
-.testimonial-slide img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-bottom: 10px;
+@media only screen and (max-width: 1500px) {
+  .widget.left {
+    max-width: 690px;
+  }
 }
 
-.testimonial-slide h3 {
-  font-size: 18px;
-  margin-bottom: 5px;
-}
-.heading{
-  color: white;
-  padding: 10px;
+@media only screen and (max-width: 1400px) {
+  .widget.left {
+    max-width: 590px;
+  }
 }
 
-
-
-// .carousel {
-//   width: 100%;
-//   height: 800px;
-//   position: relative;
-//   overflow: hidden;
-
-// }
-
-// .slide {
-//   width: 100%;
-//   height: 100%;
-//   background-size: cover;
-//   background-repeat: no-repeat;
-//   background-position: center;
-//   transition: background-image 0.5s ease-in-out;
-// }
-.carousel {
-  width: 100%;
-  height: 800px;
-  position: relative;
-  overflow: hidden;
+@media only screen and (max-width: 1200px) {
+  .widget.left {
+    max-width: 900px;
+  }
 }
 
-.slide {
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  transition: background-image 0.5s ease-in-out;
-}
-
-.dots {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.dot {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: #bbb;
-  margin: 0 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.dot.active {
-  background-color: #d39292;
-}
