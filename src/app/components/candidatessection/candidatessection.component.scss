@@ -30,8 +30,8 @@
   justify-content: space-between;
 }
 .job-box {
-width: 280px; /* Set the desired width for each job box */
-height: 400px; /* Set the desired height for each job box */
+width: 320px; /* Set the desired width for each job box */
+height: 500px; /* Set the desired height for each job box */
 border: 1px solid #ccc;
 padding: 10px;
 margin: 10px;
@@ -75,10 +75,11 @@ pointer-events: auto;
 background-color: #fff;
 padding: 20px;
 border-radius: 15px;
-max-width: 1200px;
+max-width: 2000px;
 max-height: 80vh; /* Limit the height of the popup */
 overflow-y: auto;
 overflow-x: auto; /* Enable vertical scrolling if content overflows */
+position: relative;
 }
 
 /* Styles for the pagination controls */
@@ -88,13 +89,150 @@ margin-top: 20px;
 
 /* Styles for the table in the popup */
 table {
-width: 100%;
+width: 1500px;
+border-collapse: collapse;
 }
 
-th, td {
-text-align: left;
-padding: 8px;
-}
+
 
 /* Add more styles as needed */
+/* Add a close icon to the top-right corner of the popup content */
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 30px;
+  color: #888;
+  cursor: pointer;
+}
 
+.close-icon:hover {
+  color: #a91a1a; /* Change color on hover if desired */
+}
+.table-header {
+  text-align: center;
+  padding: 10px;
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+th, td {
+  text-align: left;
+  padding: 10px;
+  padding-left: 30px;
+  border: 1px solid #ccc; /* Add a border to all sides of each cell */
+  border-top: none; /* Remove top border for th cells */
+}
+
+.disabled-cell {
+  background-color: #f8f8f8; /* Change the background color to visually indicate the disabled state */
+  color: #888; /* Change the text color for better contrast */
+  pointer-events: none; /* Disable pointer events to prevent interaction */
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.pagination button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 0 5px;
+}
+
+.pagination span {
+  font-size: 16px;
+  margin: 0 10px;
+}
+
+.pagination button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+.icon-button {
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: color 0.3s;
+  
+}
+
+.icon-button:hover {
+  color: #007bff; /* Change this to the color you want for hover effect */
+}
+/* CSS for the input and icon alignment */
+// .input-icon-cell {
+//   position: relative;
+// }
+
+// .input-icon-cell .icon-button {
+//   position: absolute;
+//   right: 50px; /* Adjust the spacing from the input box as needed */
+//   top: 50%;
+//   transform: translateY(-50%);
+//   font-size: 1.5em;
+//   cursor: pointer;
+//   transition: color 0.3s;
+// }
+
+// .input-icon-cell .icon-button:hover {
+//   color: #007bff;
+// }
+/* CSS for the input and icon alignment */
+.input-icon-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.input-box {
+  padding-right: 30px;
+
+}
+.icon-button {
+  position: absolute;
+  top: 50%;
+  /* Adjust the spacing from the input box as needed */
+  transform: translateY(-50%);
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: color 0.3s;
+  color: cornflowerblue;
+}
+.reject-icon {
+  position: absolute;
+  top: 50%;
+  right: 5px; /* Adjust the spacing from the input box as needed */
+  transform: translateY(-50%);
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: color 0.3s;
+  color: maroon;
+}
+
+// .reject-icon:hover {
+//   color: #007bff;
+// }
+// .icon-button[title]:hover:after {
+//   content: attr(title);
+//   position: absolute;
+//   top: -20px; /* Adjust the distance of the tooltip from the icon */
+//   left: 50%;
+//   transform: translateX(-50%);
+//   background-color: #333;
+//   color: #fff;
+//   padding: 5px;
+//   border-radius: 5px;
+//   font-size: 12px;
+//   opacity: 0;
+//   pointer-events: none;
+//   transition: opacity 0.2s, transform 0.2s;
+// }
+
+.icon-button[title]:hover:after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-10px);
+}

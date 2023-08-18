@@ -21,7 +21,11 @@ interface ResumeViewModel {
   companyName: string;
   jobTitle: string;
   experience: string;
+  positions:number;
+  qualification:string;
   skills: string;
+  salary:number;
+  endDate:string;
   jobType: string;
   postedDate: string;
   location: string;

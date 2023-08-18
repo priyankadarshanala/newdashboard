@@ -120,6 +120,7 @@
  
   <div id="uploadPopup" class="popup" [ngClass]="{ 'active': showUploadPopupFlag }">
     <div class="popup-content upload">
+      <span class="close-icon" (click)="cancelUpload()">&times;</span>
       <!-- <h3 class="head">Upload Your Resume</h3> -->
       <div class="head">
       <h3>Name</h3>

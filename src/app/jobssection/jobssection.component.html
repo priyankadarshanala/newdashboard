@@ -83,8 +83,8 @@
             <span *ngIf="!searchText || !item.jobType">{{ item.jobType }}</span>
         </p>
           <p><span style="color: rgb(8, 8, 8); font-weight: 600;">Qualification: </span>{{ item.qualification }}</p>
-          <p><span style="color: rgb(8, 8, 8); font-weight: 600;">PostedDate: </span>{{ item.postedDate }}</p>
-          <p><span style="color: rgb(8, 8, 8); font-weight: 600;">EndDate: </span>{{ item.endDate }}</p>
+          <p><span style="color: rgb(8, 8, 8); font-weight: 600;">PostedDate: </span>{{ item.postedDate | date }}</p>
+          <p><span style="color: rgb(8, 8, 8); font-weight: 600;">EndDate: </span>{{ item.endDate | date }}</p>
       
          <p>
             <span style="color: rgb(8, 8, 8); font-weight: 600;">Location: </span>

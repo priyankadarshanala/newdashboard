@@ -1,38 +1,69 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { JobscountService, RecentApplicantViewModel } from 'src/app/services/jobscount.service';
+import { ActivatedRoute } from '@angular/router';
+import { UserStoreService } from 'src/app/services/user-store.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-recentapplicants',
-  templateUrl: './recentapplicants.component.html',
-  styleUrls: ['./recentapplicants.component.scss']
+selector: 'app-recentapplicants',
+templateUrl: './recentapplicants.component.html',
+styleUrls: ['./recentapplicants.component.scss']
 })
 export class RecentapplicantsComponent implements OnInit {
-  recentApplicants: RecentApplicantViewModel[] = [];
-  visibleApplicantCount = 10; // Number of applicants to show initially
+username: string = '';
+pieChartData = {
+labels: ["Scheduledmeeting", "Nostatus", "Rejectmeeting"],
+datasets: [
+{
+data: [0, 0, 0], // Initialize with zeros
+label: 'weekly',
+backgroundColor: [
+'rgba(255, 0, 25, 0.7)',
+'rgba(157, 0, 25, 0.7)',
+'rgba(67, 0, 25, 0.7)',
+],
 
-  constructor(private jobsCountService: JobscountService) { }
+  },
+],
+};
+pieChartOption = {
+responsive: false,
+};
 
-  ngOnInit(): void {
-    this.getRecentApplicants();
-  }
+constructor(
+private userStore: UserStoreService,
+private auth: AuthService,
+private jobsCountService: JobscountService,
+private route: ActivatedRoute,
+private cdr: ChangeDetectorRef
+) {}
 
+ngOnInit(): void {
+this.userStore.getFullNameFromStore().subscribe(val => {
+const fullNameFromToken = this.auth.getfullNameFromToken();
+this.username = val || fullNameFromToken;
+});
 
-  getRecentApplicants(): void {
-    this.jobsCountService.getRecentApplicants().subscribe(
-      applicants => {
-        // Sort the applicants based on the most recent ones first (using the 'applicationDate' property)
-        applicants.sort((a, b) => new Date(b.applicationDate).getTime() - new Date(a.applicationDate).getTime());
-        // Limit the number of applicants to show
-        this.recentApplicants = applicants.slice(0, this.visibleApplicantCount); // Use 'visibleApplicantCount' instead of 'maxRecentApplicantsToShow'
-      },
-      error => {
-        console.error('Error fetching recent applicants:', error);
-      }
-    );
-  }
-  
-  
+this.getJobsCounts();
+}
 
-
-
+getJobsCounts(): void {
+const schedulingMeetingCount$ = this.jobsCountService.getSchedulingMeetingCount(this.username);
+const noStatusCount$ = this.jobsCountService.getNoStatusCount(this.username);
+const rejectedCount$ = this.jobsCountService.getRejectedCount(this.username);
+const allCounts$ = forkJoin([schedulingMeetingCount$, noStatusCount$, rejectedCount$]);
+allCounts$.subscribe(
+([schedulingMeetingCount, noStatusCount, rejectedCount]: [number, number, number]) => {
+console.log('Fetched Data:', schedulingMeetingCount, noStatusCount, rejectedCount);
+this.pieChartData.datasets[0].data = [schedulingMeetingCount, noStatusCount, rejectedCount];
+this.cdr.detectChanges(); // Manually trigger change detection
+console.log('Updated Pie Chart Data:', this.pieChartData);
+},
+(error: any) => {
+const errorMessage = error.error && error.error.message ? error.error.message : 'An error occurred.';
+console.error('Error fetching data: ', errorMessage);
+}
+);
+}
 }

@@ -3,34 +3,41 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 
+
+export interface WeekApplicantCount {
+  weekNumber: number;
+  applicantCount: number;
+}
+export interface WeekJobsCount {
+  weekNumber: number;
+  jobsCount: number;
+}
+
+
 export interface RecentApplicantViewModel {
   applicantName: string;
   applicantEmail: string;
   jobTitle: string;
   companyLocation: string;
   skills: string;
-  applicationDate: string;
+  appliedDate: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class JobscountService {
+
+  
   private apiUrl = 'https://localhost:7058/api/Jobs';
   private ApiUrl = 'https://localhost:7058/api/Resumes';
-  private RecentApplicant = 'https://localhost:7058/api/Resumes/RecentApplicants';
-
+  
   constructor(private http: HttpClient) {}
 
-  getRecentApplicants(): Observable<RecentApplicantViewModel[]> {
-    return this.http.get<RecentApplicantViewModel[]>(this.RecentApplicant).pipe(
-      catchError((error: any) => {
-        console.error('Error fetching recent applicants:', error);
-        return [];
-      })
-    );
-  }
 
+  getDailyJobsCounts(username: string): Observable<number[]> {
+    return this.http.get<number[]>(`${this.apiUrl}/DailyJobsCountOrdered/${username}`);
+  }
   getTotalJobsCount(username: string): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/count/${username}`);
   }
@@ -46,5 +53,29 @@ export class JobscountService {
   getNotAppliedJobsCount(username: string): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/NotAppliedJobsCount/${username}`);
   }
+    getSchedulingMeetingCount(username: string): Observable<number> {
+      return this.http.get<number>(`${this.ApiUrl}/SchedulingMeetingCount?username=${username}`);
+    }
+  
+    // getNonScheduledMeetingCount(username: string): Observable<number> {
+    //   return this.http.get<number>(`${this.ApiUrl}/NonScheduledMeetingCount?username=${username}`);
+    // }
+    getNoStatusCount(username: string): Observable<number> {
+      return this.http.get<number>(`${this.ApiUrl}/NoStatusCount?username=${username}`);
+    }
+    
+    getRejectedCount(username: string): Observable<number> {
+      return this.http.get<number>(`${this.ApiUrl}/RejectedCount?username=${username}`);
+    }
+   
+    getApplicantsPerWeek(username: string, year: number, week: number): Observable<WeekApplicantCount[]> {
+    const url = `${this.ApiUrl}/ApplicantsPerWeek?username=${username}&year=${year}&week=${week}`;
+    return this.http.get<WeekApplicantCount[]>(url);
+   }
+   getJobsCountPerWeek(username: string, year: number, week: number): Observable<WeekJobsCount[]> {
+    const url = `${this.apiUrl}/JobsCountPerWeek?username=${username}&year=${year}&week=${week}`;
+    return this.http.get<WeekJobsCount[]>(url);
+
+   }
 
 }

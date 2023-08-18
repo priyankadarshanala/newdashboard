@@ -21,9 +21,6 @@ interface ResumeViewModel {
   isStatusSelected: boolean;
 }
 
-
-
-
 interface JobResumeViewModel {
   jobId: number;
   companyName: string;
@@ -33,6 +30,10 @@ interface JobResumeViewModel {
   jobType: string;
   postedDate: string;
   location: string;
+  salary:number;
+  endDate:string;
+  positions:number;
+  qualification:string;
   jobDescription: string;
   resumes: ResumeViewModel[];
   showResumes?: boolean; 
@@ -53,7 +54,11 @@ export class CandidatessectionComponent implements OnInit {
   jobResumes: JobResumeViewModel[] = [];
   showResumesPopup: boolean = false;
   selectedResumes: ResumeViewModel[] = [];
-
+  currentPage = 1;
+  itemsPerPage = 2;
+  totalItems = 0;
+  paginatedResumes: any[] = [];
+  totalPages!: number ;
 username:string='';
   
 isDatePickerOpen = false;
@@ -62,7 +67,7 @@ RejectionReason: string = '';
 meetingDates: { [key: number]: Date } = {};
 rejectionReasons: { [key: number]: string } = {};
   statusmessage: any;
-
+  serialNumbers: number[] = [];
   constructor(private http: HttpClient,private localStorage: LocalStorageService, private jobsint: JobsdetailsService, private userStore:UserStoreService, private auth:AuthService) {
   
   }
@@ -80,23 +85,26 @@ rejectionReasons: { [key: number]: string } = {};
   
 
     this.getResumes(this.username);
+    this.serialNumbers = Array.from({ length: this.selectedResumes.length }, (_, index) => index + 1);
   
-  
+  }
+  paginateResumes() {
+    if (this.currentPage === 1) {
+      this.paginatedResumes = this.selectedResumes.slice(0, this.itemsPerPage);
+    } else if (this.currentPage === 2) {
+      this.paginatedResumes = this.selectedResumes.slice(this.itemsPerPage);
+    } else {
+      this.paginatedResumes = [];
+    }
   }
   getResumes(username: string): void {
     this.jobsint.getResumes(username).subscribe(resumes => {
       this.jobResumes = resumes;
     
-        
-        
-    
-      
-    });
+  });
   }
 
- 
-  
-  downloadResume(resume: ResumeViewModel): void {
+ downloadResume(resume: ResumeViewModel): void {
     const link = document.createElement('a');
     link.href = 'data:application/octet-stream;base64,' + resume.resumeFileData;
     link.download = resume.resumeFileName;
@@ -106,29 +114,30 @@ rejectionReasons: { [key: number]: string } = {};
   openResumesPopup(jobResume: JobResumeViewModel): void {
     this.selectedResumes = jobResume.resumes;
     this.showResumesPopup = true;
- 
-   
-   
+    this.totalItems = this.selectedResumes.length;
+    this.paginateResumes();
+    this.calculateTotalPages();
+   }
+
+   calculateTotalPages() {
+    this.totalPages = Math.ceil(this.selectedResumes.length / this.itemsPerPage);
   }
 
+  changePage(change: number) {
+    const newPage = this.currentPage + change;
+    
+    if (newPage >= 1 && newPage <= this.totalPages) {
+      this.currentPage = newPage;
+      this.paginateResumes();
+    }
+  }
+  
   closeResumesPopup(): void {
     this.showResumesPopup = false;
     this.selectedResumes = [];
   }
 
-
- 
-
-
-
-
-
-
-
-
-
-
-  scheduleMeeting(resume: ResumeViewModel) {
+scheduleMeeting(resume: ResumeViewModel) {
     const resumeId = resume.resumeId;
     const selectedDate = this.meetingDates[resumeId]; // Get the selected date for the specific applicant
     const meetingDateTime = new Date(selectedDate).toISOString();
@@ -196,8 +205,17 @@ rejectionReasons: { [key: number]: string } = {};
       
     } 
   }
-  
+  getCurrentUtcDate(): Date {
+    return new Date(); // Returns the current date and time
+  }
 
+
+
+
+  isDateFormatted(value: string): boolean {
+    return !!value && !isNaN(Date.parse(value));
+  }
+  
 }
 
 

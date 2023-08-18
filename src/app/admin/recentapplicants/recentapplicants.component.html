@@ -1,5 +1,4 @@
-<!-- <div class="chart-container" [chart]="chart"></div>
-
+<!-- 
 
 <table class="table">
     <thead>
@@ -21,9 +20,15 @@
         <td>{{ applicant.jobTitle }}</td>
         <td>{{ applicant.companyLocation }}</td>
         <td>{{ applicant.skills }}</td>
-        <td>{{ applicant.applicationDate | date }}</td> 
+        <td>{{ applicant.appliedDate | date }}</td> 
       </tr>
     </tbody>
+    <button *ngIf="!allApplicantsVisible" (click)="showMoreApplicants()">View More</button>
   </table>
   
   -->
+  <div class="chart-wrapper">
+    <canvas baseChart width="300" height="350" type="pie" [data]="pieChartData" [options]="pieChartOption"></canvas>
+  </div>
+  
+  

@@ -23,9 +23,11 @@ import { ClientHomeComponent } from './components/client-home/client-home.compon
 import { CandidatessectionComponent } from './components/candidatessection/candidatessection.component';
 import { JobsdataComponent } from './admin/jobsdata/jobsdata.component';
 import { RecentapplicantsComponent } from './admin/recentapplicants/recentapplicants.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgChartsModule } from 'ng2-charts';
 import { FilterPipe } from './filter.pipe';
 import { HighlightPipePipe } from './highlight-pipe.pipe';
+import { BarchartComponent } from './barchart/barchart.component';
+import { LinechartComponent } from './admin/linechart/linechart.component';
 
 
 
@@ -55,6 +57,8 @@ import { HighlightPipePipe } from './highlight-pipe.pipe';
     RecentapplicantsComponent,
     FilterPipe,
     HighlightPipePipe,
+    BarchartComponent,
+    LinechartComponent,
    
     
    
@@ -66,8 +70,9 @@ import { HighlightPipePipe } from './highlight-pipe.pipe';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    FontAwesomeModule,
+   NgChartsModule,
     NgToastModule
+  
     
   ],
   providers: [{

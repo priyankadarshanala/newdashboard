@@ -137,6 +137,20 @@
     /* Add any additional styling for the highlight effect */
   }
 
+  /* Style for the close icon */
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333; /* You can change the color to your preference */
+}
+
+/* Optional: Change the color on hover for better interactivity */
+.close-icon:hover {
+  color: #a91a1a; /* Change to your desired hover color */
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
